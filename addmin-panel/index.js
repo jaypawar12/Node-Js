@@ -34,7 +34,7 @@ const routes = [
 ];
 
 routes.forEach((route) => {
-  app.get(`/${route}`, (req, res) => {
+  app.get(`/${route}.html`, (req, res) => {
     res.render(route, { title: route.replace("-", " ").toUpperCase() });
   });
 });
