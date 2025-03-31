@@ -4,6 +4,7 @@ const cars = require('./models/car-showroom');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { log } = require('console');
 
 const app = express();
 const port = 9000;
@@ -147,4 +148,11 @@ app.get("/edit", (req, res) => {
 })
 
 
-app.listen(port, () => console.log(`Server started... http://localhost:${port}`));
+app.listen(port, (err) => {
+    if (err) {
+        console.log("server is not start...", err);
+        return false;
+    } 
+    
+    console.log(`Server started... http://localhost:${port}`)
+});
