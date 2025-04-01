@@ -38,17 +38,17 @@
             <form method="post" action="/car-inventory" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label">Car Brand:</label>
-                    <input type="text" class="form-control" name="brand" placeholder="Enter car brand">
+                    <input type="text" class="form-control" name="brand" placeholder="Enter car brand" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Car Model:</label>
-                    <input type="text" class="form-control" name="model" placeholder="Enter car model">
+                    <input type="text" class="form-control" name="model" placeholder="Enter car model" required>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Car Price(₹):</label>
-                    <input type="number" class="form-control" name="price" placeholder="Enter car price">
+                    <input type="number" class="form-control" name="price" placeholder="Enter car price" required>
                 </div>
 
                 <div class="mb-3">
@@ -69,7 +69,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">Car Image:</label>
-                    <input type="file" class="form-control" name="image">
+                    <input type="file" class="form-control" name="image" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Submit</button>
