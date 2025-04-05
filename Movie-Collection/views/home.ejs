@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Collection</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <a href="/form" class="btn btn-primary my-3 ms-3">Add Movie</a>
+
+    <div class="container my-5" id="movieInventory">
+        <h2 class="text-center mb-5 fw-bold">Movie Collection</h2>
+        <div class="row g-4">
+            <% record.forEach((e) => { %> <!-- Loop through the records (movie data) -->
+                <div class="col-md-3">
+                    <div class="card shadow-lg position-relative">
+                        <img src="<%= e.movieImage %>" class="card-img-top" alt="Movie Image" style="height: 230px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title"><%= e.movieName %></h5> <!-- Display movie name -->
+                            <p class="card-text mb-2"><strong>Price:</strong> ₹<%= e.ticketPrice %></p> <!-- Display ticket price -->
+                            <p class="card-text"><strong>Genre:</strong> <%= e.genre %></p> <!-- Display genre -->
+                            <p class="card-text"><strong>Description:</strong> <%= e.description %></p> <!-- Display description -->
+                            <div class="d-flex justify-content-center gap-2 mt-3">
+                                <a href="/edit/<%= e.id %>" class="btn btn-warning">Edit</a>
+                                <a href="/delete/<%= e.id %>" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %> <!-- End loop -->
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
