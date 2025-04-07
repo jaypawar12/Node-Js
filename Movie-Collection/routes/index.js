@@ -11,6 +11,9 @@ const movieCTR = require("../controllers/movieController.js");
 
 route.get('/', movieCTR.homePage);
 route.get('/form', movieCTR.formPage); 
-route.post('/movie-submit', upload.single('movieImage'),movieCTR.movieAdd)
-
+route.post('/movie-submit', upload.single('movieImage'),movieCTR.movieAdd);
+route.get('/delete/delMovie',movieCTR.delMovie);
+route.get('/updateMovie/:id',movieCTR.updateMovie);
+route.post('/editMovie/:id', upload.single('movieImage'), movieCTR.editMovie);
+   
 module.exports = route;
