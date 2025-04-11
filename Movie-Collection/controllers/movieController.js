@@ -81,6 +81,9 @@ const editMovie = async (req, res) => {
 
     try {
         await movies.findByIdAndUpdate(id, req.body);
+
+        console.log('Form Data:', req.body);
+        console.log('File:', req.file);
         res.redirect('/');
     } catch (error) {
         console.error('Error updating movie:', error);

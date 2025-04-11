@@ -90,7 +90,7 @@
             <div class="col-md-8 col-lg-6 col-xl-5">
                 <div class="form-card">
                     <h2>🎥 Edit Movie</h2>
-                    <form method="post" action="/movie-submit" enctype="multipart/form-data" id="movieForm">
+                    <form method="post" action="/editMovie/<%= record.id %>" enctype="multipart/form-data" id="movieForm">
 
                         <!-- Movie Name -->
                         <div class="form-group mb-4">
@@ -148,7 +148,7 @@
         document.getElementById('movieForm').addEventListener('submit', function (event) {
             const description = document.getElementById('description').value;
             const wordCount = description.split(/\s+/).filter(Boolean).length;
-            if (wordCount >= 4) {
+            if (wordCount >= 5) {
                 document.getElementById('error-message').textContent = 'Description cannot be more than 4 words!';
                 event.preventDefault();
             } else {

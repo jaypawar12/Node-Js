@@ -62,7 +62,7 @@
     document.getElementById('movieForm').addEventListener('submit', function(event) {
       const description = document.getElementById('description').value;
       const wordCount = description.split(/\s+/).filter(Boolean).length;
-      if (wordCount >= 4) {
+      if (wordCount >= 5) {
         document.getElementById('error-message').textContent = 'Description cannot be more than 4 words!';
       } else {
         document.getElementById('error-message').textContent = '';
