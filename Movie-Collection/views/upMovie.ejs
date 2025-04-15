@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Movie Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 80px;
+        }
+
+        .form-card {
+            background-color: #181818;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #000;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: #e50914;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .form-control {
+            background-color: #1f1f1f;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+            border-color: #007bff;
+        }
+
+        .form-control::placeholder {
+            color: #aaa;
+        }
+
+        .btn-netflix {
+            background-color: #e50914;
+            border: none;
+            padding: 1rem;
+            font-weight: bold;
+            border-radius: 0.5rem;
+        }
+
+        .btn-netflix:hover {
+            background-color: #b00710;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        .form-group img {
+            max-width: 150px;
+            margin-top: 10px;
+            border-radius: 0.5rem;
+        }
+
+        .text-muted {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-5">
+                <div class="form-card">
+                    <h2>🎥 Edit Movie</h2>
+                    <form method="post" action="/editMovie/<%= record.id %>" enctype="multipart/form-data" id="movieForm">
+
+                        <!-- Movie Name -->
+                        <div class="form-group mb-4">
+                            <label for="movieName">Movie Title:</label>
+                            <input type="text" class="form-control" name="movieName" value="<%= record.movieName %>" placeholder="Movie Title" required>
+                        </div>
+
+                        <!-- Genre -->
+                        <div class="form-group mb-4">
+                            <label for="genre">Genre:</label>
+                            <input type="text" class="form-control" name="genre" value="<%= record.genre %>" placeholder="Genre" required>
+                        </div>
+
+                        <!-- Ticket Price -->
+                        <div class="form-group mb-4">
+                            <label for="ticketPrice">Ticket Price (₹):</label>
+                            <input type="text" class="form-control" name="ticketPrice" value="<%= record.ticketPrice %>" placeholder="Ticket Price"
+                                required>
+                        </div>
+
+                        <!-- Rating -->
+                        <div class="form-group mb-4">
+                            <label for="rating">Rating:</label>
+                            <input type="text" class="form-control" name="rating" value="<%= record.rating %>" placeholder="Rating" required>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group mb-4">
+                            <label for="description">Description:</label>
+                            <textarea class="form-control" name="description" rows="3" placeholder="Short Description"
+                                required id="description"> <%= record.description %> </textarea>
+                        </div>
+
+                        <!-- Image Upload -->
+                        <div class="form-group mb-4">
+                            <label for="movieImage">Movie Image:</label>
+                            <input type="file" class="form-control" name="movieImage">
+                            <div class="mt-2">
+                                <img src="../<%= record.movieImage %>" class="img-thumbnail" alt="Movie Image" width="150">
+                            </div>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div id="error-message" class="error-message"></div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-netflix w-100">Add Movie</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
