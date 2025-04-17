@@ -36,74 +36,65 @@ app.get('/', (req, res) => {
 
 // Insert
 app.post('/car-inventory', upload.single('image'), async (req, res) => {
-
     const { id, brand, model, price, color } = req.body;
-
     console.log(req.file);
 
     let image = "";
-
     if (req.file) {
         image = req.file.path;
     }
 
-    if (id) {
-        // Edit
+    try {
+        if (id) {
+            // Edit
+            const data = await cars.findById(id);
 
-        const data = await cars.findById(id);
+            if (image) {
+                console.log("New Image");
+                fs.unlinkSync(data.image);
 
-        if (image) {
-            console.log("New Image");
+                await cars.findByIdAndUpdate(id, {
+                    brand,
+                    model,
+                    price,
+                    image,
+                    color,
+                });
 
-            fs.unlinkSync(data.image)
+                console.log("Data is Updated (new image)");
+                return res.redirect('/');
+            } else {
+                console.log("Old Image");
 
-            cars.findByIdAndUpdate(id, {
-                brand: brand,
-                model: model,
-                price: price,
-                image: image,
-                color: color,
-            }).then(() => {
-                console.log("Data is Updated");
-                res.redirect('/');
-            }).catch((err) => {
-                console.log(err);
-            });
+                await cars.findByIdAndUpdate(id, {
+                    brand,
+                    model,
+                    price,
+                    color,
+                    image: data.image,
+                });
 
+                console.log("Data is Updated (old image)");
+                return res.redirect('/');
+            }
         } else {
-            console.log("Old Image");
-
-            cars.findByIdAndUpdate(id, {
-                brand: brand,
-                model: model,
-                price: price,
-                color: color,
-                image: data.image,
-            }).then(() => {
-                console.log("Data is Updated");
-                res.redirect('/');
-            }).catch((err) => {
-                console.log(err);
+            // Insert
+            await cars.create({
+                brand,
+                model,
+                price,
+                color,
+                image,
             });
-        }
 
-    } else {
-        // Insert
-        cars.create({
-            brand: brand,
-            model: model,
-            price: price,
-            color: color,
-            image: image,
-        }).then(() => {
             console.log("Data inserted...");
-            res.redirect('/');
-        }).catch((err) => {
-            console.log("Error ", err);
-        })
+            return res.redirect('/');
+        }
+    } catch (err) {
+        console.log("Error", err);
+        return res.status(500).send("An error occurred");
     }
-    res.redirect('/');
-})
+});
 
 // Fetch
 app.get('/form', (req, res) => {
