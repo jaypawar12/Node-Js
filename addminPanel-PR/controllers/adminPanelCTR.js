@@ -1,16 +1,24 @@
-const signUpPage = (req, res) => {
-    res.render('loginPage');
+const signInPage = (req, res) => {
+    res.render('signInPage');
 };
-const loginPage = (req, res) => {
+const signUpPage = (req, res) => {
     res.render('signUpPage');
 };
 const dashboard = (req, res) => {
     res.render('dashboard');
 }
+const addAdminPage = (req, res) => {
+    res.render('addAdminPage')
+}
+const adminTable = (req, res) => {
+    res.render('adminTable')
+}
 
 
 module.exports = {
-    loginPage,
+    signInPage,
     signUpPage,
     dashboard,
+    addAdminPage,
+    adminTable,
 };
