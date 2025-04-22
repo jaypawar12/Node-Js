@@ -1,3 +1,5 @@
+const adminDetails = require('../models/adminModel');
+
 const signInPage = (req, res) => {
     res.render('signInPage');
 };
@@ -5,6 +7,11 @@ const signUpPage = (req, res) => {
     res.render('signUpPage');
 };
 const dashboard = (req, res) => {
+    res.render('dashboard');
+}
+const adminInset = (req, res) => {
+    
+    console.log(req.body);
     res.render('dashboard');
 }
 const addAdminPage = (req, res) => {
@@ -19,6 +26,7 @@ module.exports = {
     signInPage,
     signUpPage,
     dashboard,
+    adminInset,
     addAdminPage,
     adminTable,
 };
