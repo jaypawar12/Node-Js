@@ -2,12 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>BRTS Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .bus-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
-    <h1>Home Page</h1>
 
-    <a href="/addBrts">HOME</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="/">BRTS Manager</a>
+        <a href="/addBrts" class="btn btn-success">+ Add Route</a>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <% if (routes.length === 0) { %>
+            <div class="col text-center">
+                <h3>No BRTS Routes Found</h3>
+                <a href="/addBrts" class="btn btn-primary mt-3">Add New Route</a>
+            </div>
+        <% } else { %>
+            <% routes.forEach(route => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 bus-card shadow-sm">
+                        <img src="<%= route.busImage %>" class="card-img-top" alt="Bus Image">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= route.routeName %></h5>
+                            <p class="card-text"><strong>Bus Name:</strong> <%= route.busName %></p>
+                            <p class="card-text"><strong>Driver Name:</strong> <%= route.driverName %></p>
+                            <p class="card-text"><strong>Route:</strong> <%= route.busRoute %></p>
+                            <p class="card-text"><strong>Seats:</strong> <%= route.busLength %></p>
+                        </div>
+                        <div class="card-footer bg-white border-0 d-flex justify-content-between">
+                            <a href="/updateBrts/<%= route.id %>" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/deleteBrts?id=<%= route.id %>" class="btn btn-danger btn-sm">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } %>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

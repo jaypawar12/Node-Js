@@ -1,27 +1,27 @@
 const mongoose = require('mongoose');
 
-const brtsRoutes = mongoose.Schema({
+const brtsRoutes = new mongoose.Schema({
     busName: {
         type: String,
-        require: true,
+        required: true,
     },
     driverName: {
         type: String,
-        require: true,
+        required: true,
     },
     busRoute: {
         type: String,
-        require: true,
+        required: true,
     },
     busLength: {
         type: String,
-        require: true,
+        required: true,
     },
     busImage: {
         type: String,
-        require: true,
+        required: true,
     }
 });
 
-module.exports = brtsRoutes;
-
+const Brts = mongoose.model('Brts', brtsRoutes);
+module.exports = Brts;

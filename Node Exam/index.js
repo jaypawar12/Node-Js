@@ -12,5 +12,5 @@ app.listen(port, (err) => {
     if(err){
         console.log("Something Went Wrong...");
     }
-    console.log(`Server Is Started at https://localhost:${port}`);
+    console.log(`Server Is Started at http://localhost:${port}`);
 });
