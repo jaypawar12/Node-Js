@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const adminSchema = mongoose.Schema({
-    adminFame: {
+    adminFname: {
         type: String,
         require: true,
     },
-    adminLame: {
+    adminLname: {
         type: String,
         require: true,
     },
@@ -21,6 +21,10 @@ const adminSchema = mongoose.Schema({
         type: String,
         require:  true,
     },
+    adminImage: {
+        type: String,
+        require: true,
+    }
 });
 
 const adminDetails = mongoose.model('Admin Details',adminSchema);
