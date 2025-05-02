@@ -9,7 +9,7 @@ const homePage = async (req, res) => {
         res.render('home', { record: records });
     } catch (error) {
         console.error('Error fetching movies:', error);
-        res.status(500).send('Server Error');
+        res.send('Server Error');
     }
 }
 
@@ -48,12 +48,12 @@ const movieShow = async (req, res) => {
         const movie = await movies.findById(movieId);
 
         if (!movie) {
-            return res.status(404).send("Movie not found");
+            return res.send("Movie not found");
         }
         res.render('movieDetails', { movie });
     } catch (error) {
         console.error("Error in movieShow:", error);
-        res.status(500).send("Server error");
+        res.send("Server error");
     }
 };
 
@@ -83,7 +83,7 @@ const delMovie = async (req, res) => {
         res.redirect('/');
     } catch (error) {
         console.error('Error deleting movie:', error);
-        res.status(500).send('Server Error');
+        res.send('Server Error');
     }
 };
 
@@ -107,7 +107,7 @@ const editMovie = async (req, res) => {
         const movie = await movies.findById(id);
 
         if (!movie) {
-            return res.status(404).send('Movie not found');
+            return res.send('Movie not found');
         }
 
         // If a new image is uploaded
@@ -129,7 +129,7 @@ const editMovie = async (req, res) => {
         }
 
         // Update movie
-        const upData = await movies.findByIdAndUpdate(id, req.body, { new: true });
+        const upData = await movies.findByIdAndUpdate(id, req.body);
 
         if (upData) {
             console.log('Movie updated:', upData);
@@ -140,7 +140,7 @@ const editMovie = async (req, res) => {
         res.redirect('/');
     } catch (error) {
         console.error('Error updating movie:', error);
-        res.status(500).send('Server Error');
+        res.send('Server Error');
     }
 };
 
