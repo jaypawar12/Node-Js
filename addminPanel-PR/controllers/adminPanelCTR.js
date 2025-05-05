@@ -1,3 +1,4 @@
+const { log } = require('console');
 const adminDetails = require('../models/adminModel');
 const fs = require('fs');
 
@@ -13,34 +14,78 @@ const dashboard = (req, res) => {
 const addAdminPage = (req, res) => {
     res.render('addAdminPage');
 }
-const adminTable = async(req, res) => {
+const adminTable = async (req, res) => {
     let records = await adminDetails.find({});
 
     console.log("Admin Data", records);
 
-    res.render('adminTable', {records});
+    res.render('adminTable', { records });
 }
 
 // Admin CURD 
+
 const adminInsert = (req, res) => {
     // For Debuging...
     console.log(req.body);
     console.log(req.file);
 
-    try{
+    try {
         req.body.adminImage = req.file.path;
 
         const adminInsert = adminDetails.create(req.body);
-        if(adminInsert){
+        if (adminInsert) {
             console.log("Admin Inserted");
-        }else{
+        } else {
             console.log("Admin Not Insertion");
         }
         res.redirect('/addAdminPage')
-    }catch{
+    } catch {
         res.send(`<p> Not Found : ${e} </p>`);
     }
-    
+
+}
+
+const deleteAdmin = async (req, res) => {
+    const deleteId = req.params.deleteId;
+
+    try {
+
+        const data = await adminDetails.findById(deleteId);
+
+        if (data) {
+            console.log(data.adminImage);
+
+            fs.unlinkSync(data.adminImage);
+
+            await adminDetails.findByIdAndDelete(deleteId);
+
+            res.redirect('/adminTable');
+        } else {
+            console.log("Single Record not found....");
+
+        }
+    } catch (e) {
+        res.send(`<p> Not Found : ${e} </p>`);
+    }
+
+}
+
+const editAdminPage = async (req, res) => {
+    const updateId = req.params.id;
+
+    try {
+        const record = await adminDetails.findById(updateId);
+
+        if (record) {
+            res.render('editAdminPage', { record});
+        } else {
+            console.log("Single Record not found...");
+
+        }
+    } catch (e) {
+        res.send(`<p> Not Found : ${e} </p>`);
+    }
+
 }
 
 
@@ -51,4 +96,6 @@ module.exports = {
     adminInsert,
     addAdminPage,
     adminTable,
+    editAdminPage,
+    deleteAdmin,
 };

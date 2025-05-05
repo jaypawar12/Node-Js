@@ -17,6 +17,10 @@ const adminSchema = mongoose.Schema({
         type: String,
         require: true,
     },
+    adminStatus: {
+        type: String,
+        require: true,
+    },
     joinDate: {
         type: String,
         require:  true,

@@ -39,22 +39,24 @@
                           <p class="text-xs font-weight-bold mb-0"><%= data.adminFunction %></p>
                         </td>
                         <td class="align-middle text-center text-sm">
-                          <span class="badge badge-sm bg-gradient-success">Online</span>
+                          <span class="badge badge-sm bg-gradient-success"><%= data.adminStatus %></span>
                         </td>
                         <td class="align-middle text-center">
                           <span class="text-secondary text-xs font-weight-bold"><%= data.joinDate %></span>
                         </td>
-                        <td class="align-middle d-flex justify-content-around">
-                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            Edit
-                          </a>
-                          <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                            Delete
-                          </a>
-                        </td>
+                        <td class="align-middle text-center">
+                          <div class="d-flex justify-content-center gap-4">
+                            <a href="/editAdmin/<%= data._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              Edit
+                            </a>
+                            <a href="/deleteAdmin/<%= data._id %>" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                              Delete
+                            </a>
+                          </div>
+                        </td>                        
                       </tr>
                     <% }); %>
-                  </tbody>
+                  </tbody>  
                   
                 </table>
               </div>
