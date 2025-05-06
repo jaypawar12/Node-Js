@@ -1,4 +1,3 @@
-const { log } = require('console');
 const adminDetails = require('../models/adminModel');
 const fs = require('fs');
 
@@ -20,6 +19,10 @@ const adminTable = async (req, res) => {
     console.log("Admin Data", records);
 
     res.render('adminTable', { records });
+}
+const viewProfile = async (req, res) => {
+    
+    res.render('adminProfile');
 }
 
 // Admin CURD 
@@ -44,7 +47,6 @@ const adminInsert = (req, res) => {
     }
 
 }
-
 const deleteAdmin = async (req, res) => {
     const deleteId = req.params.deleteId;
 
@@ -69,33 +71,57 @@ const deleteAdmin = async (req, res) => {
     }
 
 }
-
 const editAdminPage = async (req, res) => {
+    const editId = req.params.id;
+
+    try {
+        const record = await adminDetails.findById(editId);
+
+        if (record) {
+            res.render('editAdminPage', { record });
+        } else {
+            res.send(`<p> Admin record not found </p>`);
+        }
+    } catch (e) {
+        res.send(`<p> Error: ${e} </p>`);
+    }
+}
+const updateAdmin = async (req, res) => {
     const updateId = req.params.id;
 
     try {
-        const record = await adminDetails.findById(updateId);
+        const existingData = await adminDetails.findById(updateId);
 
-        if (record) {
-            res.render('editAdminPage', { record});
-        } else {
-            console.log("Single Record not found...");
-
+        if (!existingData) {
+            res.send(`<p> Admin record not found </p>`);
         }
-    } catch (e) {
-        res.send(`<p> Not Found : ${e} </p>`);
-    }
 
+        if (req.file) {
+            fs.unlinkSync(existingData.adminImage);
+            req.body.adminImage = req.file.path;
+        } else {
+            req.body.adminImage = existingData.adminImage;
+        }
+
+        await adminDetails.findByIdAndUpdate(updateId, req.body);
+
+        res.redirect(`/adminTable`);
+    } catch (e) {
+        res.send(`<p> Update Failed: ${e} </p>`);
+    }
 }
+
 
 
 module.exports = {
     signInPage,
     signUpPage,
     dashboard,
-    adminInsert,
     addAdminPage,
     adminTable,
+    viewProfile,
+    adminInsert,
     editAdminPage,
+    updateAdmin,
     deleteAdmin,
 };

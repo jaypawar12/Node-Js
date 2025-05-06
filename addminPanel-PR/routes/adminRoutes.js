@@ -10,19 +10,20 @@ const storage = multer.diskStorage({
     },
 });
 
-const upload = multer({storage : storage});
+const upload = multer({ storage: storage });
 
 const route = express.Router();
 
 console.log("Start Routing...");
 
-const {signInPage, signUpPage, dashboard, adminInsert, addAdminPage,adminTable, editAdminPage, deleteAdmin} = require('../controllers/adminPanelCTR');
+const { signInPage, signUpPage, dashboard, addAdminPage, adminTable, viewProfile, adminInsert, editAdminPage, updateAdmin, deleteAdmin } = require('../controllers/adminPanelCTR');
 
 route.get('/', signUpPage);
 route.get('/signInPage', signInPage);
 route.get('/dashboard', dashboard);
 route.get('/addAdminPage', addAdminPage);
 route.get('/adminTable', adminTable);
+route.get('/viewProfile', viewProfile)
 
 // Admin CURD :- 
 
@@ -34,4 +35,7 @@ route.get('/deleteAdmin/:deleteId', deleteAdmin);
 
 // EditAdmin Page Render...
 route.get('/editAdmin/:id', editAdminPage);
+
+// Updating...
+route.post('/updateAdmin/:id', upload.single('adminImage'), updateAdmin);
 module.exports = route;

@@ -7,11 +7,11 @@
         </div>
     </div>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" action="/updateAdmin/<%= record._id %>" enctype="multipart/form-data">
         <!-- First Name -->
         <div class="input-group input-group-outline mb-3">
-            <label class="form-label"><%= record ? "Jay" : "First Name" %></label>
-            <input type="text" name="adminFname" class="form-control">
+            <label class="form-label">First Name</label>
+            <input type="text"  value="<%= record?.adminFname || '' %>" name="adminFname" class="form-control">
         </div>
 
         <!-- Last Name -->
