@@ -16,10 +16,12 @@ const route = express.Router();
 
 console.log("Start Routing...");
 
-const { signInPage, signUpPage, dashboard, addAdminPage, adminTable, viewProfile, adminInsert, editAdminPage, updateAdmin, deleteAdmin } = require('../controllers/adminPanelCTR');
+const { signUpPage, signUp, signInPage, adminChecked, dashboard, addAdminPage, adminTable, viewProfile, adminInsert, editAdminPage, updateAdmin, deleteAdmin } = require('../controllers/adminPanelCTR');
 
 route.get('/', signUpPage);
+route.post('/signUp', signUp);
 route.get('/signInPage', signInPage);
+route.post('/signIn', adminChecked)
 route.get('/dashboard', dashboard);
 route.get('/addAdminPage', addAdminPage);
 route.get('/adminTable', adminTable);

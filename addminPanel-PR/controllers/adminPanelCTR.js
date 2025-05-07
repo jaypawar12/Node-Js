@@ -1,28 +1,99 @@
 const adminDetails = require('../models/adminModel');
 const fs = require('fs');
 
+
+// Sign In Admin
 const signInPage = (req, res) => {
-    res.render('signInPage');
+    console.log(req.cookies.admin);
+    if (req.cookies.admin == undefined) {
+        res.render('signInPage');
+    } else {
+        res.redirect('/dashboard')
+    }
 };
+
+const adminChecked = async (req, res) => {
+    const { adminEmail, adminPassword } = req.body;
+
+    try {
+        const adminData = await adminDetails.findOne({ adminEmail });
+
+        if (adminData) {
+            if (adminData.adminPassword === adminPassword) {
+                console.log("Admin Login Successfully..!");
+                res.cookie('admin', adminData);
+                res.redirect('/dashboard');
+            } else {
+                console.log("Password Doesn't Matched");
+                res.redirect('/signInPage');
+            }
+        } else {
+            console.log("Email Doesn't Matched");
+            res.redirect('/signInPage');
+        }
+
+    } catch (e) {
+        res.send(`<p> Error: ${e} </p>`);
+    }
+};
+
+
+// Sign Up Admin
 const signUpPage = (req, res) => {
     res.render('signUpPage');
 };
+
+const signUp = (req, res) => {
+    console.log(req.cookies.admin);
+    if (req.cookies.admin == undefined) {
+        res.render('signUpPage');
+    } else {
+        res.redirect('/dashboard')
+    }
+}
+
+// Rendering Page
 const dashboard = (req, res) => {
-    res.render('dashboard');
+    if (req.cookies.admin == undefined) {
+        res.redirect('/signInPage')
+    } else {
+        const currentAdmin = req.cookies.admin;
+        console.log(currentAdmin);
+        res.render('dashboard', { currentAdmin });
+    }
 }
 const addAdminPage = (req, res) => {
-    res.render('addAdminPage');
-}
-const adminTable = async (req, res) => {
-    let records = await adminDetails.find({});
-
-    console.log("Admin Data", records);
-
-    res.render('adminTable', { records });
+    if (req.cookies.admin == undefined) {
+        res.render('/signInPage');
+    } else {
+        res.render('addAdminPage');
+    }
 }
 const viewProfile = async (req, res) => {
-    
-    res.render('adminProfile');
+    console.log(req.cookies.admin);
+    if (req.cookies.admin == undefined) {
+        res.render('/signInPage');
+    } else {
+        res.render('adminProfile');
+    }
+}
+
+// Admin Table
+const adminTable = async (req, res) => {
+    if (req.cookies.admin == undefined) {
+        res.redirect('/signInPage');
+    } else {
+        try {
+            let records = await adminDetails.find({});
+            const currentAdmin = req.cookies.admin;
+
+            console.log("Admin Data", records);
+
+            res.render('adminTable', { records, currentAdmin});
+        }catch (e){
+            res.send(`<p> Not Found : ${e} </p>`);
+        }
+    }
 }
 
 // Admin CURD 
@@ -43,7 +114,7 @@ const adminInsert = (req, res) => {
         }
         res.redirect('/addAdminPage')
     } catch {
-        res.send(`<p> Not Found : ${e} </p>`);
+        res.send(`<p> Error : ${e} </p>`);
     }
 
 }
@@ -67,7 +138,7 @@ const deleteAdmin = async (req, res) => {
 
         }
     } catch (e) {
-        res.send(`<p> Not Found : ${e} </p>`);
+        res.send(`<p> Error : ${e} </p>`);
     }
 
 }
@@ -115,7 +186,9 @@ const updateAdmin = async (req, res) => {
 
 module.exports = {
     signInPage,
+    adminChecked,
     signUpPage,
+    signUp,
     dashboard,
     addAdminPage,
     adminTable,

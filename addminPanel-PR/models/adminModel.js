@@ -13,6 +13,10 @@ const adminSchema = mongoose.Schema({
         type: String,
         require: true,
     },
+    adminPassword: {
+        type: String,
+        require: true,
+    },
     adminFunction: {
         type: String,
         require: true,
