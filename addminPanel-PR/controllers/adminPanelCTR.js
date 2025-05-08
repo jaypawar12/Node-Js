@@ -1,5 +1,6 @@
 const adminDetails = require('../models/adminModel');
 const fs = require('fs');
+const nodemailer = require('nodemailer');
 
 
 // Sign In Admin
@@ -36,6 +37,152 @@ const adminChecked = async (req, res) => {
     }
 };
 
+// Loss Password
+const lossPasswordPage = (req, res) => {
+    res.render('auth/lossPasswordPage');
+}
+
+const lossPasswordForCheckEmail = async (req, res) => {
+    console.log("Email : ", req.body);
+    const email = req.body.email;
+
+    const data = await adminDetails.findOne({ email: email });
+
+    console.log("Checking Data : ", data);
+
+    if (data) {
+
+        // Send OTP Mail
+
+        // Init Mail
+        const transporter = nodemailer.createTransport({
+            host: "smtp.ethereal.email",
+            port: 587,
+            service: "gmail",
+            secure: false, // true for port 465, false for other ports
+            auth: {
+                user: "pawarjay684@gmail.com",
+                pass: "zxqpnybqyfbgbzjy",
+            },
+        });
+
+
+        // Send Mail
+
+        const OTP = Math.floor(Math.random() * 999999);
+
+        const info = await transporter.sendMail({
+            from: '"Admin Panel 👻" pawarjay684@gmail.com', // sender address
+            to: email, // list of receivers
+            subject: "One-Time Password (OTP) for Forget Password", // Subject line
+            html: `<!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        <title>OTP Verification</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+        <style>
+            body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            }
+            .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            }
+            .header {
+            background: linear-gradient(90deg, #42424a, #1a73e8);
+            color: #fff;
+            text-align: center;
+            padding: 30px 20px;
+            }
+            .header h2 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 24px;
+            }
+            .content {
+            padding: 30px 25px;
+            color: #333;
+            }
+            .content p {
+            margin: 15px 0;
+            font-size: 14px;
+            line-height: 1.6;
+            }
+            .otp-box {
+            background: #f0f0f0;
+            border-left: 4px solid #1a73e8;
+            padding: 12px 20px;
+            margin: 20px 0;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-align: center;
+            color: #1a73e8;
+            border-radius: 8px;
+            }
+            .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #777;
+            }
+        </style>
+        </head>
+        <body>
+        <div class="container">
+            <div class="header">
+            <h2>Verify Your Account</h2>
+            </div>
+            <div class="content">
+            <p>Hi,</p>
+            <p>
+                To keep your account secure, we have enabled Two-Factor Authentication (2FA). Please use the following One-Time Password (OTP) to complete your login.
+            </p>
+            <div class="otp-box">
+                OTP: <span>${OTP}</span>
+            </div>
+            <p>
+                This OTP is valid for <strong>10 minutes</strong> and can only be used once. Please do not share it with anyone, including our support team.
+            </p>
+            <p>Thank you for helping us keep your account safe.</p>
+            </div>
+            <div class="footer">
+            Regards,<br>
+            Jaynesh Sarkar
+            </div>
+        </div>
+        </body>
+        </html>
+        `,
+        });
+
+        console.log("Message sent: %s", info.messageId);
+
+        if (info.messageId) {
+            // OTP Page
+            res.cookie('OTP', OTP);
+            res.cookie('email', email);
+            res.redirect('/otpVerifyPage')
+        } else {
+            res.redirect('/lostPasswordPage');
+        }
+
+    } else {
+        res.redirect('/lostPasswordPage')
+    }
+}
+
+const otpVerifyPage = (req, res) => {
+    res.render("auth/otpVerifyPage");
+}
 
 // Sign Up Admin
 const signUpPage = (req, res) => {
@@ -98,8 +245,8 @@ const adminTable = async (req, res) => {
 
             console.log("Admin Data", records);
 
-            res.render('adminTable', { records, currentAdmin});
-        }catch (e){
+            res.render('adminTable', { records, currentAdmin });
+        } catch (e) {
             res.send(`<p> Not Found : ${e} </p>`);
         }
     }
@@ -196,6 +343,9 @@ const updateAdmin = async (req, res) => {
 module.exports = {
     signInPage,
     adminChecked,
+    lossPasswordPage,
+    lossPasswordForCheckEmail,
+    otpVerifyPage,
     signUpPage,
     signUp,
     dashboard,
