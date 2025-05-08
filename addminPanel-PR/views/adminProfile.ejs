@@ -62,10 +62,15 @@
                                             <h6 class="mb-0">Profile Information</h6>
                                         </div>
                                         <div class="col-md-4 text-end">
-                                            <a href="javascript:;">
-                                                <i class="fas fa-user-edit text-secondary text-sm"
+                                            <a href="/editAdmin/<%= currentAdmin._id %>">
+                                                <i class="fas fa-user-edit text-secondary text-sm pe-3"
                                                     data-bs-toggle="tooltip" data-bs-placement="top"
                                                     title="Edit Profile"></i>
+                                            </a>
+                                            <a href="/logOutAdmin">
+                                                <i class="fas fa-solid fa-power-off text-secondary text-sm"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="Logout"></i>
                                             </a>
                                         </div>
                                     </div>

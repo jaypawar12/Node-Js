@@ -11,7 +11,6 @@ const signInPage = (req, res) => {
         res.redirect('/dashboard')
     }
 };
-
 const adminChecked = async (req, res) => {
     const { adminEmail, adminPassword } = req.body;
 
@@ -42,7 +41,6 @@ const adminChecked = async (req, res) => {
 const signUpPage = (req, res) => {
     res.render('signUpPage');
 };
-
 const signUp = (req, res) => {
     console.log(req.cookies.admin);
     if (req.cookies.admin == undefined) {
@@ -70,13 +68,23 @@ const addAdminPage = (req, res) => {
     }
 }
 const viewProfile = async (req, res) => {
-    console.log(req.cookies.admin);
-    const currentAdmin = req.cookies.admin;
-    if (currentAdmin != undefined) {
-        res.render('adminProfile', {currentAdmin});
+    const cookieAdmin = req.cookies.admin;
+    if (cookieAdmin != undefined) {
+        const newAdmin = await adminDetails.findById(cookieAdmin._id);
+        if (newAdmin) {
+            res.render('adminProfile', { currentAdmin: newAdmin });
+        } else {
+            res.redirect('/signInPage');
+        }
     } else {
-        res.redirect('/signInPage')
+        res.redirect('/signInPage');
     }
+}
+
+// For Admin Logout
+const logOutAdmin = (req, res) => {
+    res.clearCookie('admin');
+    res.redirect('/signInPage');
 }
 
 // Admin Table
@@ -163,25 +171,25 @@ const updateAdmin = async (req, res) => {
 
     try {
         const existingData = await adminDetails.findById(updateId);
-
         if (!existingData) {
             res.send(`<p> Admin record not found </p>`);
         }
-
         if (req.file) {
             fs.unlinkSync(existingData.adminImage);
             req.body.adminImage = req.file.path;
         } else {
             req.body.adminImage = existingData.adminImage;
         }
+        const updatedAdmin = await adminDetails.findByIdAndUpdate(updateId, req.body);
+        // Update cookie
+        res.cookie('admin', updatedAdmin);
 
-        await adminDetails.findByIdAndUpdate(updateId, req.body);
-
-        res.redirect(`/adminTable`);
+        res.redirect(`/viewProfile`);
     } catch (e) {
         res.send(`<p> Update Failed: ${e} </p>`);
     }
 }
+
 
 
 
@@ -194,6 +202,7 @@ module.exports = {
     addAdminPage,
     adminTable,
     viewProfile,
+    logOutAdmin,
     adminInsert,
     editAdminPage,
     updateAdmin,

@@ -16,7 +16,7 @@ const route = express.Router();
 
 console.log("Start Routing...");
 
-const { signUpPage, signUp, signInPage, adminChecked, dashboard, addAdminPage, adminTable, viewProfile, adminInsert, editAdminPage, updateAdmin, deleteAdmin } = require('../controllers/adminPanelCTR');
+const { signUpPage, signUp, signInPage, adminChecked, dashboard, addAdminPage, adminTable, viewProfile, logOutAdmin, adminInsert, editAdminPage, updateAdmin, deleteAdmin } = require('../controllers/adminPanelCTR');
 
 route.get('/', signUpPage);
 route.post('/signUp', signUp);
@@ -25,7 +25,8 @@ route.post('/signIn', adminChecked)
 route.get('/dashboard', dashboard);
 route.get('/addAdminPage', addAdminPage);
 route.get('/adminTable', adminTable);
-route.get('/viewProfile', viewProfile)
+route.get('/viewProfile', viewProfile);
+route.get('/logOutAdmin', logOutAdmin);
 
 // Admin CURD :- 
 
