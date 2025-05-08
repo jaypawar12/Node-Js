@@ -71,10 +71,11 @@ const addAdminPage = (req, res) => {
 }
 const viewProfile = async (req, res) => {
     console.log(req.cookies.admin);
-    if (req.cookies.admin == undefined) {
-        res.render('/signInPage');
+    const currentAdmin = req.cookies.admin;
+    if (currentAdmin != undefined) {
+        res.render('adminProfile', {currentAdmin});
     } else {
-        res.render('adminProfile');
+        res.redirect('/signInPage')
     }
 }
 

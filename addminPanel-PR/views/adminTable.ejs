@@ -11,7 +11,7 @@
           </div>
           <div class="card-body px-0 pb-2">
             <div class="table-responsive p-0">
-              <% if(currentAdmin._id=="67f74b019b5e7b1b50b07905" ) { %>
+              <% if(currentAdmin._id=="681c887bf5c5ddf2a9bf04fd" ) { %>
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
@@ -88,7 +88,6 @@
                         </th>
                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                           Employed</th>
-                        <th class="text-secondary opacity-7 text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -125,18 +124,6 @@
                             <span class="text-secondary text-xs font-weight-bold">
                               <%= data.joinDate %>
                             </span>
-                          </td>
-                          <td class="align-middle text-center">
-                            <div class="d-flex justify-content-center gap-4">
-                              <a href="/editAdmin/<%= data._id %>" class="text-secondary font-weight-bold text-xs"
-                                data-toggle="tooltip" data-original-title="Edit user">
-                                Edit
-                              </a>
-                              <a href="/deleteAdmin/<%= data._id %>" class="text-secondary font-weight-bold text-xs"
-                                data-toggle="tooltip" data-original-title="Delete user">
-                                Delete
-                              </a>
-                            </div>
                           </td>
                         </tr>
                         <% }); %>
