@@ -41,12 +41,11 @@ const adminChecked = async (req, res) => {
 const lossPasswordPage = (req, res) => {
     res.render('auth/lossPasswordPage');
 }
-
 const lossPasswordForCheckEmail = async (req, res) => {
     console.log("Email : ", req.body);
-    const email = req.body.email;
+    const email = req.body.resetEmail;
 
-    const data = await adminDetails.findOne({ email: email });
+    const data = await adminDetails.findOne({ adminEmail: email });
 
     console.log("Checking Data : ", data);
 
@@ -56,13 +55,10 @@ const lossPasswordForCheckEmail = async (req, res) => {
 
         // Init Mail
         const transporter = nodemailer.createTransport({
-            host: "smtp.ethereal.email",
-            port: 587,
             service: "gmail",
-            secure: false, // true for port 465, false for other ports
             auth: {
                 user: "pawarjay684@gmail.com",
-                pass: "zxqpnybqyfbgbzjy",
+                pass: "zshbmszosdjqownu",
             },
         });
 
@@ -156,7 +152,7 @@ const lossPasswordForCheckEmail = async (req, res) => {
             </div>
             <div class="footer">
             Regards,<br>
-            Jaynesh Sarkar
+            Jay Pawar
             </div>
         </div>
         </body>
@@ -176,13 +172,71 @@ const lossPasswordForCheckEmail = async (req, res) => {
         }
 
     } else {
-        res.redirect('/lostPasswordPage')
+        res.redirect('/lossPasswordPage')
     }
 }
-
 const otpVerifyPage = (req, res) => {
     res.render("auth/otpVerifyPage");
 }
+const verifyOTP = (req, res) => {
+    console.log(req.body);
+    console.log(req.cookies.OTP);
+
+
+    if (req.body.OTP == req.cookies.OTP) {
+        res.redirect('/newSetPasswordPage');
+    } else {
+        res.redirect('back');
+        console.log("OTP has not matched...");
+    }
+}
+const newSetPasswordPage = (req, res) => {
+    res.render('auth/setNewPasswordPage');
+}
+
+const checkNewPassword = async(req, res) => {
+     console.log(req.body);
+
+    try {
+        if (req.body.newPassword == req.body.confirmPassword) {
+            const email = req.cookies.admin;
+            console.log(email);
+            
+
+            const data = await adminDetails.findOne({ admin: email });
+            console.log(data);
+            
+
+            if (data) {
+                const updatePass = await adminDetails.findByIdAndUpdate(data.id, { adminPassword: req.body.newPassword });
+                if (updatePass) {
+                    console.log("Password Updated...");
+
+                    res.clearCookie('email');
+                    res.clearCookie('OTP');
+                    res.redirect('/signInPage');
+
+                } else {
+                    console.log("Password not updated....");
+
+                    res.redirect('back');
+                }
+            } else {
+                console.log("Email is not valid...");
+
+                res.redirect('back');
+            }
+        } else {
+            console.log("New Password and Conform Password has not matched....");
+
+            res.redirect('back');
+        }
+
+    } catch (e) {
+        res.send(`Not Found : ${e}`);
+    }
+}
+
 
 // Sign Up Admin
 const signUpPage = (req, res) => {
@@ -346,6 +400,9 @@ module.exports = {
     lossPasswordPage,
     lossPasswordForCheckEmail,
     otpVerifyPage,
+    verifyOTP,
+    newSetPasswordPage,
+    checkNewPassword,
     signUpPage,
     signUp,
     dashboard,

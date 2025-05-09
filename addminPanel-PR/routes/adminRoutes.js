@@ -16,7 +16,7 @@ const route = express.Router();
 
 console.log("Start Routing...");
 
-const { signUpPage, signUp, signInPage, adminChecked, lossPasswordPage, lossPasswordForCheckEmail, otpVerifyPage, dashboard, addAdminPage, adminTable, viewProfile, logOutAdmin, adminInsert, editAdminPage, updateAdmin, deleteAdmin } = require('../controllers/adminPanelCTR');
+const { signUpPage, signUp, signInPage, adminChecked, lossPasswordPage, lossPasswordForCheckEmail, otpVerifyPage, verifyOTP, newSetPasswordPage, checkNewPassword, dashboard, addAdminPage, adminTable, viewProfile, logOutAdmin, adminInsert, editAdminPage, updateAdmin, deleteAdmin } = require('../controllers/adminPanelCTR');
 
 // For Sign Up
 route.get('/', signUpPage);
@@ -26,6 +26,9 @@ route.post('/signUp', signUp);
 route.get('/lossPasswordPage', lossPasswordPage);
 route.post('/lossPasswordForCheckEmail', lossPasswordForCheckEmail);
 route.get('/otpVerifyPage', otpVerifyPage);
+route.post('/verifyOTP',verifyOTP);
+route.get("/newSetPasswordPage", newSetPasswordPage);
+route.post('/checkNewPassword', checkNewPassword)
 
 
 // For Sign In
