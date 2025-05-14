@@ -58,8 +58,10 @@ const lossPasswordForCheckEmail = async (req, res) => {
             service: "gmail",
             auth: {
                 user: "pawarjay684@gmail.com",
-                pass: "zshbmszosdjqownu",
+                pass: "sqaqaoqpcnfxezxl",
             },
+            debug: true,
+            logger: true,
         });
 
 
@@ -68,7 +70,7 @@ const lossPasswordForCheckEmail = async (req, res) => {
         const OTP = Math.floor(Math.random() * 999999);
 
         const info = await transporter.sendMail({
-            from: '"Admin Panel 👻" pawarjay684@gmail.com', // sender address
+            from: '"Admin Panel" pawarjay684@gmail.com', // sender address
             to: email, // list of receivers
             subject: "One-Time Password (OTP) for Forget Password", // Subject line
             html: `<!DOCTYPE html>
@@ -194,18 +196,18 @@ const newSetPasswordPage = (req, res) => {
     res.render('auth/setNewPasswordPage');
 }
 
-const checkNewPassword = async(req, res) => {
-     console.log(req.body);
+const checkNewPassword = async (req, res) => {
+    console.log(req.body);
 
     try {
         if (req.body.newPassword == req.body.confirmPassword) {
             const email = req.cookies.admin;
             console.log(email);
-            
+
 
             const data = await adminDetails.findOne({ admin: email });
             console.log(data);
-            
+
 
             if (data) {
                 const updatePass = await adminDetails.findByIdAndUpdate(data.id, { adminPassword: req.body.newPassword });
@@ -297,7 +299,11 @@ const adminTable = async (req, res) => {
             let records = await adminDetails.find({});
             const currentAdmin = req.cookies.admin;
 
-            console.log("Admin Data", records);
+            records = records.filter((data) => {
+                return data.id != currentAdmin._id;
+            });
+
+            console.log("Admin Data : ", records);
 
             res.render('adminTable', { records, currentAdmin });
         } catch (e) {

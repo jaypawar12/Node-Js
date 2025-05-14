@@ -11,7 +11,7 @@
           </div>
           <div class="card-body px-0 pb-2">
             <div class="table-responsive p-0">
-              <% if(currentAdmin._id=="681c887bf5c5ddf2a9bf04fd" ) { %>
+              <% if(currentAdmin._id=="682320cbbe2efc5d4b221dd8" ) { %>
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
@@ -116,10 +116,18 @@
                             </p>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="badge badge-sm bg-gradient-success">
-                              <%= data.adminStatus %>
+                            <span class="text-white px-2 py-1 rounded 
+                              <%= data.adminStatus === 'ONLINE' 
+                                ? 'bg-success' 
+                                : 'bg-danger' %>">
+                              <%= data.adminStatus.toUpperCase() %>
                             </span>
                           </td>
+
+
+
+
+
                           <td class="align-middle text-center">
                             <span class="text-secondary text-xs font-weight-bold">
                               <%= data.joinDate %>
