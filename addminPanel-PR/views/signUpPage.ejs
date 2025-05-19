@@ -57,14 +57,24 @@
                       <input type="email" name="adminEmail" class="form-control">
                     </div>
                     <div class="input-group input-group-outline mb-3">
-                      <select name="adminFunction" class="form-control" id="">
-                        <option hidden>--Select Your Function--</option>
-                        <% let adminFunction=["Manager", "HR" , "Web-Developer" , "Application-Developer" ]; %>
-                          <% adminFunction.forEach((data) => { %>
+                      <select name="adminFunction" class="form-control" required>
+                        <option value="" hidden>--Select Your Function--</option>
+                        <% let adminFunction=[ "Manager" , "HR" , "Web-Developer" , "Application-Developer"
+                          , "UI/UX Designer" , "Project Coordinator" , "QA Engineer" , "DevOps Engineer"
+                          , "Database Administrator" ]; %>
+                          <% adminFunction.forEach((data)=> { %>
                             <option value="<%= data %>">
                               <%= data %>
                             </option>
                             <% }); %>
+                      </select>
+                    </div>
+
+                    <div class="input-group input-group-outline mb-3">
+                      <select name="adminStatus" class="form-control" required>
+                        <option value="" hidden>--Enter A Status--</option>
+                        <option value="Online" style="color: green;">Online</option>
+                        <option value="Offline" style="color: red;">Offline</option>
                       </select>
                     </div>
 

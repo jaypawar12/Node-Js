@@ -195,7 +195,6 @@ const verifyOTP = (req, res) => {
 const newSetPasswordPage = (req, res) => {
     res.render('auth/setNewPasswordPage');
 }
-
 const checkNewPassword = async (req, res) => {
     console.log(req.body);
 
@@ -244,14 +243,24 @@ const checkNewPassword = async (req, res) => {
 const signUpPage = (req, res) => {
     res.render('signUpPage');
 };
-const signUp = (req, res) => {
-    console.log(req.cookies.admin);
-    if (req.cookies.admin == undefined) {
-        res.render('signUpPage');
+const signUp = async (req, res) => {
+    
+    console.log(req.body);
+    console.log(req.file);
+
+  try {
+    req.body.adminImage = req.file.path;
+    const newAdmin = await adminDetails.create(req.body);
+    if (newAdmin) {
+      res.redirect('/signInPage');
     } else {
-        res.redirect('/dashboard')
+      res.send("Failed to register.");
     }
-}
+  } catch (e) {
+    res.send(`Error: ${e}`);
+  }
+};
+
 
 // Rendering Page
 const dashboard = (req, res) => {
