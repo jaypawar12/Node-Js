@@ -20,7 +20,7 @@ const { signUpPage, signUp, signInPage, adminChecked, lossPasswordPage, lossPass
 
 // For Sign Up
 route.get('/', signUpPage);
-route.post('/signUp', signUp);
+route.post('/signUp',  upload.single('adminImage'), signUp);
 
 // Loss Password 
 route.get('/lossPasswordPage', lossPasswordPage);

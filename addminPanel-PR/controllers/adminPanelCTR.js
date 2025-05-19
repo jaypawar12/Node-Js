@@ -244,21 +244,23 @@ const signUpPage = (req, res) => {
     res.render('signUpPage');
 };
 const signUp = async (req, res) => {
-    
+
     console.log(req.body);
     console.log(req.file);
 
-  try {
-    req.body.adminImage = req.file.path;
-    const newAdmin = await adminDetails.create(req.body);
-    if (newAdmin) {
-      res.redirect('/signInPage');
-    } else {
-      res.send("Failed to register.");
+    try {
+        req.body.adminImage = req.file.path;
+        const newAdmin = await adminDetails.create(req.body);
+        console.log(newAdmin);
+
+        if (newAdmin) {
+            res.redirect('/signInPage');
+        } else {
+            res.send("Failed to register.");
+        }
+    } catch (e) {
+        res.send(`Error: ${e}`);
     }
-  } catch (e) {
-    res.send(`Error: ${e}`);
-  }
 };
 
 
