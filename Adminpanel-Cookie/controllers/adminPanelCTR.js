@@ -200,11 +200,11 @@ const checkNewPassword = async (req, res) => {
 
     try {
         if (req.body.newPassword == req.body.confirmPassword) {
-            const email = req.cookies.admin;
+            const email = req.cookies.email;
             console.log(email);
 
 
-            const data = await adminDetails.findOne({ admin: email });
+            const data = await adminDetails.findOne({ adminEmail: email });
             console.log(data);
 
 
@@ -220,17 +220,17 @@ const checkNewPassword = async (req, res) => {
                 } else {
                     console.log("Password not updated....");
 
-                    res.redirect('back');
+                    res.redirect('/newSetPasswordPage');
                 }
             } else {
                 console.log("Email is not valid...");
 
-                res.redirect('back');
+                res.redirect('/newSetPasswordPage');
             }
         } else {
             console.log("New Password and Conform Password has not matched....");
 
-            res.redirect('back');
+            res.redirect('/newSetPasswordPage');
         }
 
     } catch (e) {

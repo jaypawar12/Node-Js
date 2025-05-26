@@ -11,7 +11,7 @@
           </div>
           <div class="card-body px-0 pb-2">
             <div class="table-responsive p-0">
-              <% if(currentAdmin._id=="682320cbbe2efc5d4b221dd8" ) { %>
+              <% if(currentAdmin._id=="6830456e467c228b7b190806" ) { %>
                 <table class="table align-items-center mb-0">
                   <thead>
                     <tr>
@@ -50,10 +50,15 @@
                           </p>
                         </td>
                         <td class="align-middle text-center text-sm">
-                          <span class="badge badge-sm bg-gradient-success">
+                          <span
+                            class="badge badge-sm <% if(data.adminStatus === 'Online') { %> bg-gradient-success <% } else { %> bg-gradient-danger <% } %>">
                             <%= data.adminStatus %>
                           </span>
                         </td>
+
+
+
+
                         <td class="align-middle text-center">
                           <span class="text-secondary text-xs font-weight-bold">
                             <%= data.joinDate %>
@@ -116,7 +121,7 @@
                             </p>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="text-white px-2 py-1 rounded bg-gradient-success">
+                            <span class="text-white px-2 py-1 rounded <% if(data.adminStatus === 'Online') { %> bg-gradient-success <% } else { %> bg-gradient-danger <% } %>">
                               <%= data.adminStatus %>
                             </span>
                           </td>

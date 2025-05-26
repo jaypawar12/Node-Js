@@ -46,15 +46,15 @@
                   <form action="/signUp" method="post" enctype="multipart/form-data">
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">First Name</label>
-                      <input type="text" name="adminFname" class="form-control">
+                      <input type="text" name="adminFname" class="form-control" required>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Last Name</label>
-                      <input type="text" name="adminLname" class="form-control">
+                      <input type="text" name="adminLname" class="form-control" required>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Email</label>
-                      <input type="email" name="adminEmail" class="form-control">
+                      <input type="email" name="adminEmail" class="form-control" required>
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <select name="adminFunction" class="form-control" required>
@@ -80,14 +80,14 @@
 
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Password</label>
-                      <input type="password" name="adminPassword" class="form-control">
+                      <input type="password" name="adminPassword" class="form-control" required>
                     </div>
 
                     <div class="input-group input-group-outline mb-3">`
-                      <input type="date" name="joinDate" class="form-control">
+                      <input type="date" name="joinDate" class="form-control" required>
                     </div>
                     <div class="input-group input-group-outline mb-3">
-                      <input type="file" name="adminImage" class="form-control">
+                      <input type="file" name="adminImage" class="form-control" required>
                     </div>
                     <div class="form-check form-check-info text-start ps-0">
                       <input class="form-check-input" type="checkbox" id="flexCheckDefault" checked>

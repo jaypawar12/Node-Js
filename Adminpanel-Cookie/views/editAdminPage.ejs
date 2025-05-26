@@ -30,7 +30,7 @@
             <div class="input-group input-group-outline mb-3">
                 <select name="adminFunction" class="form-control">
                     <option disabled selected hidden>--Select Your Function--</option>
-                    <% const adminFunction=["Manager", "HR" , "Web-Developer" , "Application-Developer" ]; %>
+                    <% const adminFunction=["Manager", "HR", "Web-Developer", "Application-Developer", "UI/UX Designer", "Project Coordinator", "QA Engineer", "DevOps Engineer", "Database Administrator"]; %>
                         <% adminFunction.forEach((func)=> { %>
                             <option value="<%= func %>" <%=record?.adminFunction===func ? 'selected' : '' %>><%= func %>
                             </option>
