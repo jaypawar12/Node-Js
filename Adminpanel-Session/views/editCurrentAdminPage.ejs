@@ -1,0 +1,148 @@
+<%- include('header') %>
+
+<div class="main-content position-relative max-height-vh-100 h-100">
+  <div class="container-fluid px-2 px-md-4">
+    
+    <!-- Banner -->
+    <div class="page-header min-height-300 border-radius-xl mt-4"
+         style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80'); background-size: cover;">
+       <span class="mask  bg-gradient-dark  opacity-6"></span>
+    </div>
+
+    <!-- Edit Admin Card -->
+    <div class="card shadow-lg border-0 mx-4 mt-n6 bg-light rounded-4">
+      <div class="card-body px-4 py-5">
+        <div class="row justify-content-center">
+          <div class="col-md-10 col-lg-8">
+            
+            <h3 class="text-center text-primary mb-4 fw-bold">
+              <i class="fas fa-user-edit me-2"></i>Edit Admin Profile
+            </h3>
+
+            <form method="post" action="/updateCurrentAdmin/<%= record._id %>" enctype="multipart/form-data">
+
+              <!-- First Name -->
+              <div class="form-group mb-4">
+                <label class="form-label"><i class="fas fa-user me-2 text-info"></i>First Name</label>
+                <input type="text" name="adminFname" value="<%= record?.adminFname || '' %>" class="form-control fancy-input" placeholder="Enter first name">
+              </div>
+
+              <!-- Last Name -->
+              <div class="form-group mb-4">
+                <label class="form-label"><i class="fas fa-user me-2 text-info"></i>Last Name</label>
+                <input type="text" name="adminLname" value="<%= record?.adminLname || '' %>" class="form-control fancy-input" placeholder="Enter last name">
+              </div>
+
+              <!-- Email -->
+              <div class="form-group mb-4">
+                <label class="form-label"><i class="fas fa-envelope me-2 text-info"></i>Email Address</label>
+                <input type="email" name="adminEmail" value="<%= record?.adminEmail || '' %>" class="form-control fancy-input" placeholder="Enter email address">
+              </div>
+
+              <!-- Function -->
+              <div class="form-group mb-4">
+                <label class="form-label"><i class="fas fa-briefcase me-2 text-info"></i>Function</label>
+                <select name="adminFunction" class="form-select fancy-input">
+                  <% const functions = ["Manager", "HR", "Web-Developer", "Application-Developer", "UI/UX Designer", "Project Coordinator", "QA Engineer", "DevOps Engineer", "Database Administrator"]; %>
+                  <% functions.forEach(func => { %>
+                    <option value="<%= func %>" <%= record?.adminFunction === func ? 'selected' : '' %>><%= func %></option>
+                  <% }) %>
+                </select>
+              </div>
+
+              <!-- Status -->
+              <div class="form-group mb-4">
+                <label class="form-label"><i class="fas fa-signal me-2 text-info"></i>Status</label>
+                <select name="adminStatus" class="form-select fancy-input">
+                  <% ["Online", "Offline"].forEach(status => { %>
+                    <option value="<%= status %>" <%= record?.adminStatus === status ? 'selected' : '' %>><%= status %></option>
+                  <% }) %>
+                </select>
+              </div>
+
+              <!-- Join Date -->
+              <div class="form-group mb-4">
+                <label class="form-label"><i class="fas fa-calendar-alt me-2 text-info"></i>Join Date</label>
+                <input type="date" name="joinDate" class="form-control fancy-input" value="<%= record?.joinDate || '' %>">
+              </div>
+
+              <!-- Current Image -->
+              <% if (record?.adminImage) { %>
+                <div class="mb-4">
+                  <label class="form-label text-dark"><i class="fas fa-image me-2 text-info"></i>Current Image</label><br>
+                  <img src="../<%= record.adminImage %>" class="rounded shadow-sm border" height="100" alt="Admin Image">
+                </div>
+              <% } %>
+
+              <!-- Upload New Image -->
+              <div class="form-group mb-4">
+                <label class="form-label"><i class="fas fa-upload me-2 text-info"></i>Upload New Image</label>
+                <input type="file" name="adminImage" class="form-control fancy-input">
+              </div>
+
+              <!-- Buttons -->
+              <div class="d-flex justify-content-between mt-4">
+                <a href="/viewProfile" class="btn btn-outline-secondary px-4 rounded-pill">
+                  <i class="fas fa-arrow-left me-1"></i> Cancel
+                </a>
+                <button type="submit" class="btn btn-gradient-primary px-4 shadow rounded-pill">
+                  <i class="fas fa-save me-1"></i> Update Admin
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-4 mt-5">
+      <div class="container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-lg-6 mb-lg-0 mb-4 text-center text-muted text-sm text-lg-start">
+            © <script>document.write(new Date().getFullYear())</script>, made with <i class="fa fa-heart text-danger"></i> by Creative Tim
+          </div>
+          <div class="col-lg-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+              <li class="nav-item"><a href="#" class="nav-link text-muted">Creative Tim</a></li>
+              <li class="nav-item"><a href="#" class="nav-link text-muted">About Us</a></li>
+              <li class="nav-item"><a href="#" class="nav-link text-muted">Blog</a></li>
+              <li class="nav-item"><a href="#" class="nav-link pe-0 text-muted">License</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</div>
+
+<%- include('footer') %>
+
+<!-- Enhanced Styles -->
+<style>
+  .fancy-input {
+    background-color: #eef4fa !important;
+    border-radius: 10px;
+    border: 1px solid #dbe2ef;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+  }
+
+  .fancy-input:focus {
+    border-color: #5e72e4;
+    box-shadow: 0 0 0 0.15rem rgba(94, 114, 228, 0.25);
+    background-color: #fff;
+  }
+
+  .btn-gradient-primary {
+    background-image: linear-gradient(310deg, #5e72e4, #825ee4);
+    color: #fff;
+    border: none;
+  }
+
+  .btn-gradient-primary:hover {
+    background-image: linear-gradient(310deg, #4e62d4, #704ed4);
+  }
+</style>
