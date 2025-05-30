@@ -8,32 +8,7 @@ const signInPage = (req, res) => {
     res.render('signInPage');
 };
 const adminChecked = async (req, res) => {
-    console.log("Email or Password", req.body);
-
     res.redirect('/dashboard');
-    // const { adminEmail, adminPassword } = req.body;
-
-    // try {
-
-    //     // const adminData = await adminDetails.findOne({ adminEmail });
-
-    //     // if (adminData) {
-    //     //     if (adminData.adminPassword === adminPassword) {
-    //     //         console.log("Admin Login Successfully..!");
-    //     //         res.cookie('admin', adminData);
-    //     //         res.redirect('/dashboard');
-    //     //     } else {
-    //     //         console.log("Password Doesn't Matched");
-    //     //         res.redirect('/signInPage');
-    //     //     }
-    //     // } else {
-    //     //     console.log("Email Doesn't Matched");
-    //     //     res.redirect('/signInPage');
-    //     // }
-
-    // } catch (e) {
-    //     res.send(`<p> Error: ${e} </p>`);
-    // }
 };
 
 // Loss Password
@@ -268,24 +243,13 @@ const dashboard = (req, res) => {
     res.render('dashboard');
 }
 const addAdminPage = (req, res) => {
-    if (req.cookies.admin == undefined) {
-        res.render('/signInPage');
-    } else {
-        res.render('addAdminPage');
-    }
+    res.render('addAdminPage');
 }
 const viewProfile = async (req, res) => {
-    const cookieAdmin = req.cookies.admin;
-    if (cookieAdmin != undefined) {
-        const newAdmin = await adminDetails.findById(cookieAdmin._id);
-        if (newAdmin) {
-            res.render('adminProfile', { currentAdmin: newAdmin });
-        } else {
-            res.redirect('/signInPage');
-        }
-    } else {
-        res.redirect('/signInPage');
-    }
+    const currentAdmin = req.user;
+    console.log(currentAdmin);
+    
+    res.render('adminProfile', { currentAdmin });
 }
 
 // Edit Current Admin
@@ -294,7 +258,7 @@ const editCurrentAdmin = async (req, res) => {
 
     try {
         const record = await adminDetails.findById(editCurrentAdminId);
-        const currentAdmin = req.cookies.admin;
+        const currentAdmin = req.user;
 
         if (record) {
             res.render('editCurrentAdminPage', { record, currentAdmin });
@@ -309,20 +273,20 @@ const updateCurrentAdmin = async (req, res) => {
     const updateCurrentAdminId = req.params.id;
 
     try {
-        const existingCurrentAdminData = await adminDetails.findById(updateCurrentAdminId);
-        if (!existingCurrentAdminData) {
+        const CurrentAdminData = await adminDetails.findById(updateCurrentAdminId);
+        if (!CurrentAdminData) {
             return res.send(`<p> Admin record not found </p>`);
         }
 
         if (req.file) {
             try {
-                fs.unlinkSync(existingCurrentAdminData.adminImage);
+                fs.unlinkSync(CurrentAdminData.adminImage);
             } catch (err) {
                 console.error('Image deletion failed:', err);
             }
             req.body.adminImage = req.file.path;
         } else {
-            req.body.adminImage = existingCurrentAdminData.adminImage;
+            req.body.adminImage = CurrentAdminData.adminImage;
         }
 
         const updatedCurrentAdmin = await adminDetails.findByIdAndUpdate(updateCurrentAdminId, req.body, { new: true });
@@ -335,19 +299,18 @@ const updateCurrentAdmin = async (req, res) => {
 
 // For Admin Logout
 const logOutAdmin = (req, res) => {
-    res.clearCookie('admin');
-    res.redirect('/signInPage');
+    req.session.destroy(function (err) {
+        if (err) {
+            console.log(err);
+            return false;
+        }
+        res.redirect('/signInPage')
+    })
 }
 
 // Change Password
 const changePasswordPage = (req, res) => {
-    const currentAdmin = req.cookies.admin;
-    if (currentAdmin != undefined) {
-        res.render('changePasswordPage');
-    } else {
-        res.redirect('/');
-    }
-
+    res.render('changePasswordPage');
 }
 const updatePassword = async (req, res) => {
     console.log(req.body);
@@ -394,18 +357,16 @@ const updatePassword = async (req, res) => {
 
 // Admin Table
 const adminTable = async (req, res) => {
-    if (req.cookies.admin == undefined) {
+    if (!req.user) {
         res.redirect('/signInPage');
     } else {
         try {
             let records = await adminDetails.find({});
-            const currentAdmin = req.cookies.admin;
+            const currentAdmin = req.user;
 
             records = records.filter((data) =>
                 data.id != currentAdmin._id
             );
-
-            // console.log("Admin Data : ", records);
 
             res.render('adminTable', { records, currentAdmin });
         } catch (e) {
@@ -465,7 +426,7 @@ const editAdminPage = async (req, res) => {
 
     try {
         const record = await adminDetails.findById(editId);
-        const currentAdmin = req.cookies.admin;
+        const currentAdmin = req.user;
 
         if (record) {
             res.render('editAdminPage', { record, currentAdmin });
@@ -480,15 +441,15 @@ const updateAdmin = async (req, res) => {
     const updateId = req.params.id;
 
     try {
-        const existingData = await adminDetails.findById(updateId);
-        if (!existingData) {
+        const Data = await adminDetails.findById(updateId);
+        if (!Data) {
             res.send(`<p> Admin record not found </p>`);
         }
         if (req.file) {
-            fs.unlinkSync(existingData.adminImage);
+            fs.unlinkSync(Data.adminImage);
             req.body.adminImage = req.file.path;
         } else {
-            req.body.adminImage = existingData.adminImage;
+            req.body.adminImage = Data.adminImage;
         }
         const updatedAdmin = await adminDetails.findByIdAndUpdate(updateId, req.body);
 
