@@ -19,16 +19,16 @@ passport.use("local-auth", new LocalStrategy(
             if (!admin) {
                 console.log("Email is Wrong..");
 
-                return done(null, false, { message: "Incorrect email." });
+                return done(null, false);
             }
 
             if (admin.adminPassword == adminPassword) {
                 console.log("login Success..");
-                return done(null, admin, { message: "Password Match" });
+                return done(null, admin);
 
             } else {
                 console.log("login Failed");
-                return done(null, false, { message: "Incorrect password." });
+                return done(null, false);
             }
 
         } catch (err) {
@@ -52,3 +52,42 @@ passport.deserializeUser(async function (id, done) {
         return done(null, false);
     }
 });
+
+
+// Check Login MiddleWare
+passport.checkAuthenticationForLogin = function (req, res, next) {
+    console.log("Authentication For Login Middlewate is Called...");
+
+    console.log("Auth : ", req.isAuthenticated());
+
+    if (req.isAuthenticated()) {
+        next();
+    } else {
+        res.redirect('/');
+    }
+}
+
+// Forget Password
+passport.checkForgetPasswordAuthentication = function (req, res, next) {
+    console.log("Forget Password Authentication Middlewate is Called...");
+
+    console.log("Auth : ", req.isAuthenticated());
+
+    if (req.isAuthenticated()) {
+        res.redirect('/dashboard');
+    } else {
+        next();
+    }
+}
+
+// currentAdmin Data
+passport.currentAdmin = function (req, res, next) {
+    if (req.isAuthenticated()) {
+        res.locals.currentAdmin = req.user;
+        next();
+    } else {
+        next();
+    }
+}
+
+module.exports = passport;
