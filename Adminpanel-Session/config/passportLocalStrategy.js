@@ -7,9 +7,10 @@ const adminDetails = require("../models/adminModel");
 passport.use("local-auth", new LocalStrategy(
     {
         usernameField: "adminEmail",
-        passwordField: "adminPassword"
+        passwordField: "adminPassword",
+        passReqToCallback: true,
     },
-    async function (adminEmail, adminPassword, done) {
+    async function (req, adminEmail, adminPassword, done) {
         console.log("LocalStrategy is running");
 
         try {
@@ -17,6 +18,7 @@ passport.use("local-auth", new LocalStrategy(
             const admin = await adminDetails.findOne({ adminEmail: adminEmail });
 
             if (!admin) {
+                req.session.message = "Email is Wrong"
                 console.log("Email is Wrong..");
 
                 return done(null, false);
@@ -27,6 +29,7 @@ passport.use("local-auth", new LocalStrategy(
                 return done(null, admin);
 
             } else {
+                req.session.message = "Incorrect Password"
                 console.log("login Failed");
                 return done(null, false);
             }

@@ -5,17 +5,16 @@ const nodemailer = require('nodemailer');
 
 // Sign In Admin
 const signInPage = (req, res) => {
-    res.render('signInPage');
+    let error = req.session.message;
+    res.render('signInPage', { error });
+
+    req.session.message = undefined;
 };
 const adminChecked = async (req, res) => {
-    try {
-        req.flash('success', 'Admin Login  SuccessFully...!');
-        res.redirect('/dashboard');
-    } catch (e) {
-        req.flash('error', 'Login failed!');
-        res.send(`<p> Not Found : ${e} </p>`);
-    }
+    req.flash('success', 'Admin Login Successfully...!');
+    res.redirect('/dashboard');
 };
+
 
 // Loss Password
 const lossPasswordPage = (req, res) => {
@@ -260,6 +259,7 @@ const signUp = async (req, res) => {
         if (newAdmin) {
             req.flash('success', 'Admin registered successfully!');
             res.redirect('/');
+
         } else {
             req.flash('error', 'Failed to register admin.');
             res.send("Failed to register.");
@@ -274,9 +274,10 @@ const signUp = async (req, res) => {
 // Rendering Page
 const dashboard = (req, res) => {
     res.render("dashboard", { success: req.flash('success'), error: req.flash('error') });
-}
+};
+
 const addAdminPage = (req, res) => {
-    res.render('addAdminPage');
+    res.render('addAdminPage', { success: req.flash('success'), error: req.flash('error') });
 }
 const viewProfile = async (req, res) => {
     const currentAdmin = req.user;
@@ -294,7 +295,7 @@ const editCurrentAdmin = async (req, res) => {
         const currentAdmin = req.user;
 
         if (record) {
-            res.render('editCurrentAdminPage', { record, currentAdmin });
+            res.render('editCurrentAdminPage', { record, currentAdmin, success: req.flash("success"), error: req.flash("error") });
         } else {
             res.send(`<p> Admin record not found </p>`);
         }
@@ -307,9 +308,6 @@ const updateCurrentAdmin = async (req, res) => {
 
     try {
         const CurrentAdminData = await adminDetails.findById(updateCurrentAdminId);
-        if (!CurrentAdminData) {
-            return res.send(`<p> Admin record not found </p>`);
-        }
 
         if (req.file) {
             try {
@@ -324,9 +322,10 @@ const updateCurrentAdmin = async (req, res) => {
 
         const updatedCurrentAdmin = await adminDetails.findByIdAndUpdate(updateCurrentAdminId, req.body, { new: true });
         res.cookie('admin', updatedCurrentAdmin);
-        req.flash("success", "Updated")
+        req.flash('success', 'Profile updated successfully!');
         res.redirect('/viewProfile');
     } catch (e) {
+        req.flash('error', 'Failed to update profile.');
         res.send(`<p> Update Failed: ${e} </p>`);
     }
 };
@@ -344,7 +343,7 @@ const logOutAdmin = (req, res) => {
 
 // Change Password
 const changePasswordPage = (req, res) => {
-    res.render('changePasswordPage');
+    res.render('changePasswordPage', { error: req.flash('error'), success: req.flash('success') });
 }
 const updatePassword = async (req, res) => {
     console.log(req.body);
@@ -363,10 +362,12 @@ const updatePassword = async (req, res) => {
 
                     if (isUpdate) {
                         console.log("Your Current Password Updated:", isUpdate);
+                        req.flash('success', 'Password updated successfully!');
                         res.clearCookie('admin');
                         res.redirect('/');
                     } else {
                         console.log("Password update failed.");
+                        req.flash('error', 'Password update failed.');
                         res.redirect('/changePasswordPage/:id');
                     }
 
@@ -376,14 +377,17 @@ const updatePassword = async (req, res) => {
                 }
             } else {
                 console.log("New and Confirm Passwords do not match.");
+                req.flash('error', 'New and Confirm Password do not match!');
                 res.redirect('/changePasswordPage/:id');
             }
         } else {
             console.log('Please enter a different password than the current one.');
+            req.flash('error', 'New password must be different from current!');
             res.redirect('/changePasswordPage/:id');
         }
     } else {
         console.log('Your current password is incorrect.');
+        req.flash('error', 'Incorrect current password!');
         res.redirect('/changePasswordPage/:id');
     }
 };
@@ -402,7 +406,7 @@ const adminTable = async (req, res) => {
                 data.id != currentAdmin._id
             );
 
-            res.render('adminTable', { records, currentAdmin });
+            res.render('adminTable', { records, currentAdmin, success: req.flash('success'), error: req.flash('error') });
         } catch (e) {
             res.send(`<p> Not Found : ${e} </p>`);
         }
@@ -422,10 +426,10 @@ const adminInsert = (req, res) => {
         const adminInsert = adminDetails.create(req.body);
         if (adminInsert) {
             console.log("Admin Inserted");
-            req.flash("success", "Admin Data Inserted...");
+            req.flash('success', 'Admin added successfully!');
         } else {
             console.log("Admin Not Insertion");
-            req.flash("error", "Admin not data inserted...");
+            req.flash('error', 'Failed to add admin.');
         }
         res.redirect('/addAdminPage')
     } catch {
@@ -447,10 +451,11 @@ const deleteAdmin = async (req, res) => {
 
             await adminDetails.findByIdAndDelete(deleteId);
 
+            req.flash('success', 'Admin deleted successfully!');
             res.redirect('/adminTable');
         } else {
+            req.flash('error', 'Failed to delete admin.');
             console.log("Single Record not found....");
-
         }
     } catch (e) {
         res.send(`<p> Error : ${e} </p>`);
@@ -466,6 +471,7 @@ const editAdminPage = async (req, res) => {
         if (record) {
             res.render('editAdminPage', { record });
         } else {
+            req.flash('error', 'Admin not found!');
             res.send(`<p> Admin record not found </p>`);
         }
     } catch (e) {
@@ -477,9 +483,6 @@ const updateAdmin = async (req, res) => {
 
     try {
         const Data = await adminDetails.findById(updateId);
-        if (!Data) {
-            res.send(`<p> Admin record not found </p>`);
-        }
         if (req.file) {
             fs.unlinkSync(Data.adminImage);
             req.body.adminImage = req.file.path;
@@ -491,6 +494,7 @@ const updateAdmin = async (req, res) => {
         res.redirect(`/adminTable`);
         req.flash('success', 'Admin updated successfully.');
     } catch (e) {
+        req.flash('error', 'Failed to update admin.');
         res.send(`<p> Update Failed: ${e} </p>`);
     }
 }
