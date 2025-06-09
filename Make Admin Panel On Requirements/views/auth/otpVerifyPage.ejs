@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>OTP Verification - Material Dashboard</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
+  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded" />
+  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-200">
+  <main class="main-content mt-0">
+    <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');">
+      <span class="mask bg-gradient-dark opacity-6"></span>
+      <div class="container my-auto">
+        <div class="row">
+          <div class="col-lg-4 col-md-8 col-12 mx-auto">
+            <div class="card z-index-0 fadeIn3 fadeInBottom">
+              <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
+                  <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">OTP Verification</h4>
+                </div>
+              </div>
+              <div class="card-body">
+                <form role="form" method="post" action="/verifyOTP" class="text-start">
+                  <div class="input-group input-group-outline my-3">
+                    <label class="form-label">Enter OTP</label>
+                    <input type="text" name="OTP" class="form-control" required maxlength="6">
+                  </div>
+                  <% if(error){ %>
+                    <span style="color: red; padding: 5px 0;">
+                      <%= error%>
+                    </span>
+                    <%} %>
+                  <div class="text-center">
+                    <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Verify OTP</button>
+                  </div>
+                  <p class="mt-4 text-sm text-center">
+                    Remembered your password?
+                    <a href="/" class="text-primary text-gradient font-weight-bold">Sign in</a>
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="../assets/js/material-dashboard.min.js?v=3.2.0"></script>
+</body>
+</html>
