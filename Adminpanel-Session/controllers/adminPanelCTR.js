@@ -1,3 +1,4 @@
+const { error } = require('console');
 const adminDetails = require('../models/adminModel');
 const fs = require('fs');
 const nodemailer = require('nodemailer');
@@ -5,8 +6,8 @@ const nodemailer = require('nodemailer');
 
 // Sign In Admin
 const signInPage = (req, res) => {
-    let error = req.session.message;
-    res.render('signInPage', { error });
+    let errormsg = req.session.message;
+    res.render('signInPage', { errormsg, success: req.flash("success"), error: req.flash("error"), });
 
     req.session.message = undefined;
 };
@@ -179,9 +180,10 @@ const verifyOTP = (req, res) => {
     if (req.body.OTP == req.cookies.OTP) {
         req.flash('success', 'OTP Verified!');
         res.redirect('/newSetPasswordPage');
+
     } else {
         req.flash('error', 'Invalid OTP!');
-        res.redirect('back');
+        res.redirect('/otpVerifyPage');
         console.log("OTP has not matched...");
     }
 }
@@ -190,7 +192,7 @@ const newSetPasswordPage = (req, res) => {
     const OTP = req.cookies.OTP;
 
     if (adminEmail && OTP) {
-        res.render('auth/setNewPasswordPage', { error: req.flash('error'), success: req.flash('success') });
+        res.render('auth/setNewPasswordPage', {error: req.flash('error'), success: req.flash('success') });
     } else {
         req.flash('error', 'Session expired!');
         res.redirect("/");
@@ -216,27 +218,26 @@ const checkNewPassword = async (req, res) => {
 
                     res.clearCookie('email');
                     res.clearCookie('OTP');
-                    req.flash('success', 'Password updated successfully!');
+                    req.flash('success', 'Your password has been updated successfully. Please log in.');
                     res.redirect('/');
 
                 } else {
                     console.log("Password not updated....");
-
+                    req.flash('error', 'An error occurred while updating your password.');
                     res.redirect('/newSetPasswordPage');
                 }
             } else {
                 console.log("Email is not valid...");
-
+                req.flash('error', 'Email is not valid...!');
                 res.redirect('/newSetPasswordPage');
             }
         } else {
             console.log("New Password and Conform Password has not matched....");
-
+            req.flash('error', 'New Password and Conform Password has not matched....!');
             res.redirect('/newSetPasswordPage');
         }
 
     } catch (e) {
-        req.flash('error', 'Not Found.');
         res.send(`Not Found : ${e}`);
     }
 }
@@ -363,7 +364,12 @@ const updatePassword = async (req, res) => {
                     if (isUpdate) {
                         console.log("Your Current Password Updated:", isUpdate);
                         req.flash('success', 'Password updated successfully!');
-                        res.clearCookie('admin');
+                        req.session.destroy(function (err) {
+                            if (err) {
+                                console.log(err);
+                                return false;
+                            }
+                        })
                         res.redirect('/');
                     } else {
                         console.log("Password update failed.");
@@ -469,7 +475,7 @@ const editAdminPage = async (req, res) => {
         const record = await adminDetails.findById(editId);
 
         if (record) {
-            res.render('editAdminPage', { record });
+            res.render('editAdminPage', { record, success: req.flash("success"), error: req.flash("error"), });
         } else {
             req.flash('error', 'Admin not found!');
             res.send(`<p> Admin record not found </p>`);
@@ -491,8 +497,12 @@ const updateAdmin = async (req, res) => {
         }
         const updatedAdmin = await adminDetails.findByIdAndUpdate(updateId, req.body);
 
+        if (updateAdmin) {
+            req.flash('success', 'Admin updated successfully.');
+        } else {
+            req.flash('error', 'Admin updation failed.');
+        }
         res.redirect(`/adminTable`);
-        req.flash('success', 'Admin updated successfully.');
     } catch (e) {
         req.flash('error', 'Failed to update admin.');
         res.send(`<p> Update Failed: ${e} </p>`);

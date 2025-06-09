@@ -31,6 +31,11 @@
                     <label class="form-label">Enter OTP</label>
                     <input type="text" name="OTP" class="form-control" required maxlength="6">
                   </div>
+                  <% if(error){ %>
+                    <span style="color: red; padding: 5px 0;">
+                      <%= error%>
+                    </span>
+                    <%} %>
                   <div class="text-center">
                     <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Verify OTP</button>
                   </div>

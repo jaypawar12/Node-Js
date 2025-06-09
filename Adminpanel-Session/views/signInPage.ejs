@@ -56,25 +56,25 @@
               </div>
               <div class="card-body">
                 <form role="form" method="post" action="/signIn" class="text-start">
-                  <div class="input-group input-group-outline my-3">
+                  <div class="input-group input-group-outline mt-3">
                     <label class="form-label">Email</label>
                     <input type="email" name="adminEmail" class="form-control">
                   </div>
-                  <% if(error=="Email is Wrong" ){ %>
-                    <span style="color: red; padding: 5px 0;">
-                      <%= error%>
+                  <% if(errormsg=="Email is Wrong" ){ %>
+                    <span style="color:red; font-size: 14px; padding: 2px 2px 0 2px;">
+                      <%= errormsg%>
                     </span>
                     <%} %>
-                      <div class="input-group input-group-outline mb-3">
+                      <div class="input-group input-group-outline mt-3 mb-1">
                         <label class="form-label">Password</label>
-                        <input type="password" name="adminPassword" class="form-control">
+                        <input type="password" name="adminPassword" class="form-control" required>
                       </div>
-                      <% if(error=="Incorrect Password" ){ %>
-                        <span style="color:red; padding: 5px 0;">
-                          <%= error%>
+                      <% if(errormsg=="Incorrect Password" ){ %>
+                        <span style="color:red; font-size: 14px; padding: 2px 2px 0 2px;">
+                          <%= errormsg%>
                         </span>
                         <%} %>
-                          <div class="form-check form-switch d-flex align-items-center mb-3">
+                          <div class="form-check form-switch d-flex align-items-center my-3">
                             <input class="form-check-input" type="checkbox" id="rememberMe" checked>
                             <label class="form-check-label mb-0 ms-3" for="rememberMe">Remember me</label>
                           </div>
@@ -103,6 +103,59 @@
   <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
   <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script> -->
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+  <% if (success && success.length > 0) { %>
+      Swal.fire({
+        title: "✅ success!",
+        html: "<b><%= success[0] %></b>",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+        background: "#e9f9ee",
+        color: "#155724",
+        iconColor: "#28a745",
+        toast: true,
+        position: "top-end",
+        customClass: {
+          popup: 'swal2-popup-custom',
+          title: 'swal2-title-custom',
+          htmlContainer: 'swal2-html-custom'
+        },
+        didOpen: () => {
+          const popup = Swal.getPopup();
+          popup.style.boxShadow = "0 0 15px rgba(40,167,69,0.4)";
+        }
+      });
+  <% } %>
+
+  <% if (error && error.length > 0) { %>
+      Swal.fire({
+        title: "❌ error!",
+        html: "<b><%= error[0] %></b>",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        background: "#fcebea",
+        color: "#721c24",
+        iconColor: "#dc3545",
+        toast: true,
+        position: "top-end",
+        customClass: {
+          popup: 'swal2-popup-custom',
+          title: 'swal2-title-custom',
+          htmlContainer: 'swal2-html-custom'
+        },
+        didOpen: () => {
+          const popup = Swal.getPopup();
+          popup.style.boxShadow = "0 0 15px rgba(220,53,69,0.4)";
+        }
+      });
+  <% } %>
+  </script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
