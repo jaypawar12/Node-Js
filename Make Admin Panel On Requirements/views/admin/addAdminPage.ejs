@@ -15,43 +15,43 @@
           <div class="row justify-content-center">
             <div class="col-md-10 col-lg-8">
 
-              <h4 class="text-center text-primary mb-4 fw-bold">
-                <i class="fas fa-user-plus me-2"></i>Add New Admin
+              <h4 class="text-center text-dark mb-4 fw-bold">
+                <i class="fas text-dark fa-user-plus me-2"></i>Add New Admin
               </h4>
 
               <form action="/adminInset" method="post" enctype="multipart/form-data">
 
                 <!-- First Name -->
                 <div class="form-group mb-4">
-                  <label class="form-label fw-semibold"><i class="fas fa-user me-2 text-info"></i>First Name</label>
+                  <label class="form-label fw-semibold"><i class="fas text-dark fa-user me-2 text-info"></i>First Name</label>
                   <input type="text" name="adminFname" class="form-control p-2 shadow-sm custom-bg border-0"
                     placeholder="Enter first name" required>
                 </div>
 
                 <!-- Last Name -->
                 <div class="form-group mb-4">
-                  <label class="form-label fw-semibold"><i class="fas fa-user me-2 text-info"></i>Last Name</label>
+                  <label class="form-label fw-semibold"><i class="fas text-dark fa-user me-2 text-info"></i>Last Name</label>
                   <input type="text" name="adminLname" class="form-control p-2 shadow-sm custom-bg border-0"
                     placeholder="Enter last name" required>
                 </div>
 
                 <!-- Email -->
                 <div class="form-group mb-4">
-                  <label class="form-label fw-semibold"><i class="fas fa-envelope me-2 text-info"></i>Email</label>
+                  <label class="form-label fw-semibold"><i class="fas text-dark fa-envelope me-2 text-info"></i>Email</label>
                   <input type="email" name="adminEmail" class="form-control p-2 shadow-sm custom-bg border-0"
                     placeholder="Enter email" required>
                 </div>
 
                 <!-- Password -->
                 <div class="form-group mb-4">
-                  <label class="form-label fw-semibold"><i class="fas fa-lock me-2 text-info"></i>Password</label>
+                  <label class="form-label fw-semibold"><i class="fas text-dark fa-lock me-2 text-info"></i>Password</label>
                   <input type="password" name="adminPassword" class="form-control p-2 shadow-sm custom-bg border-0"
                     placeholder="Enter password" required>
                 </div>
 
                 <!-- Function -->
                 <div class="form-group mb-4">
-                  <label class="form-label fw-semibold"><i class="fas fa-briefcase me-2 text-info"></i>Function</label>
+                  <label class="form-label fw-semibold"><i class="fas text-dark fa-briefcase me-2 text-info"></i>Function</label>
                   <select name="adminFunction" class="form-select p-2 shadow-sm custom-bg border-0" required>
                     <option value="" hidden>-- Select Function --</option>
                     <% const functions=["Manager", "HR" , "Web-Developer" , "Application-Developer" , "UI/UX Designer"
@@ -66,7 +66,7 @@
 
                 <!-- Status -->
                 <div class="form-group mb-4">
-                  <label class="form-label fw-semibold"><i class="fas fa-signal me-2 text-info"></i>Status</label>
+                  <label class="form-label fw-semibold"><i class="fas text-dark fa-signal me-2 text-info"></i>Status</label>
                   <select name="adminStatus" class="form-select p-2 shadow-sm custom-bg border-0" required>
                     <option value="" hidden>-- Select Status --</option>
                     <option value="Online" style="color: green;">Online</option>
@@ -76,21 +76,21 @@
 
                 <!-- Join Date -->
                 <div class="form-group mb-4">
-                  <label class="form-label fw-semibold"><i class="fas fa-calendar-alt me-2 text-info"></i>Join
+                  <label class="form-label fw-semibold"><i class="fas text-dark fa-calendar-alt me-2 text-info"></i>Join
                     Date</label>
                   <input type="date" name="joinDate" class="form-control p-2 shadow-sm custom-bg border-0" required>
                 </div>
 
                 <!-- Image Upload -->
                 <div class="form-group mb-4">
-                  <label class="form-label fw-semibold"><i class="fas fa-upload me-2 text-info"></i>Upload Admin
+                  <label class="form-label fw-semibold"><i class="fas text-dark fa-upload me-2 text-info"></i>Upload Admin
                     Image</label>
                   <input type="file" name="adminImage" class="form-control p-2 shadow-sm custom-bg border-0" required>
                 </div>
 
                 <!-- Submit Button -->
                 <div class="text-center mt-4">
-                  <button type="submit" class="btn btn-lg bg-gradient-primary text-white px-5 shadow">
+                  <button type="submit" class="btn btn-lg bg-gradient-dark text-white px-5 shadow">
                     <i class="fas fa-plus-circle me-2"></i>Add Admin
                   </button>
                 </div>

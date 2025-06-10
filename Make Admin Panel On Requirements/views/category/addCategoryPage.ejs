@@ -17,18 +17,18 @@
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-8">
 
-                            <h4 class="text-center text-primary mb-4 fw-bold">
-                                <i class="fas fa-layer-group me-2"></i>Add New Category
+                            <h4 class="text-center text-dark mb-4 fw-bold">
+                                <i class="fas text-dark fa-layer-group me-2"></i>Add New Category
                             </h4>
 
-                            <form action="/categoryInsert" method="POST" enctype="multipart/form-data">
+                            <form action="/category/categoryInsert" method="POST" enctype="multipart/form-data">
 
                                 <!-- Category Name -->
                                 <div class="form-group mb-4">
                                     <label class="form-label fw-semibold">
-                                        <i class="fas fa-tag me-2 text-info"></i>Category Name
+                                        <i class="fas text-dark fa-tag me-2 text-info"></i>Category Name
                                     </label>
-                                    <input type="text" name="categoryName"
+                                    <input type="text" name="category_name"
                                         class="form-control p-2 shadow-sm custom-bg border-0"
                                         placeholder="Enter category name" required>
                                 </div>
@@ -36,9 +36,9 @@
                                 <!-- Description -->
                                 <div class="form-group mb-4">
                                     <label class="form-label fw-semibold">
-                                        <i class="fas fa-info-circle me-2 text-info"></i>Description
+                                        <i class="fas text-dark fa-info-circle me-2 text-info"></i>Description
                                     </label>
-                                    <textarea name="categoryDescription" rows="3"
+                                    <textarea name="category_description" rows="3"
                                         class="form-control p-2 shadow-sm custom-bg border-0"
                                         placeholder="Enter category description" required></textarea>
                                 </div>
@@ -46,9 +46,9 @@
                                 <!-- Status -->
                                 <div class="form-group mb-4">
                                     <label class="form-label fw-semibold">
-                                        <i class="fas fa-toggle-on me-2 text-info"></i>Status
+                                        <i class="fas text-dark fa-toggle-on me-2 text-info"></i>Status
                                     </label>
-                                    <select name="categoryStatus" class="form-select p-2 shadow-sm custom-bg border-0"
+                                    <select name="category_status" class="form-select p-2 shadow-sm custom-bg border-0"
                                         required>
                                         <option value="" hidden>-- Select Status --</option>
                                         <option value="Active" style="color: green;">Active</option>
@@ -59,15 +59,15 @@
                                 <!-- Category Image -->
                                 <div class="form-group mb-4">
                                     <label class="form-label fw-semibold">
-                                        <i class="fas fa-image me-2 text-info"></i>Upload Category Image
+                                        <i class="fas text-dark fa-image me-2 text-info"></i>Upload Category Image
                                     </label>
-                                    <input type="file" name="categoryImage"
+                                    <input type="file" name="category_image"
                                         class="form-control p-2 shadow-sm custom-bg border-0" required>
                                 </div>
 
                                 <!-- Submit Button -->
                                 <div class="text-center mt-4">
-                                    <button type="submit" class="btn btn-lg bg-gradient-primary text-white px-5 shadow">
+                                    <button type="submit" class="btn btn-lg bg-gradient-dark text-white px-5 shadow">
                                         <i class="fas fa-plus-circle me-2"></i>Add Category
                                     </button>
                                 </div>

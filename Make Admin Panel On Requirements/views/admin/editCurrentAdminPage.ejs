@@ -15,7 +15,7 @@
         <div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
             
-            <h3 class="text-center text-primary mb-4 fw-bold">
+            <h3 class="text-center text-dark mb-4 fw-bold">
               <i class="fas fa-user-edit me-2"></i>Edit Admin Profile
             </h3>
 
@@ -23,25 +23,25 @@
 
               <!-- First Name -->
               <div class="form-group mb-4">
-                <label class="form-label"><i class="fas fa-user me-2 text-info"></i>First Name</label>
+                <label class="form-label"><i class="fas text-dark fa-user me-2 text-info"></i>First Name</label>
                 <input type="text" name="adminFname" value="<%= record?.adminFname || '' %>" class="form-control fancy-input" placeholder="Enter first name">
               </div>
 
               <!-- Last Name -->
               <div class="form-group mb-4">
-                <label class="form-label"><i class="fas fa-user me-2 text-info"></i>Last Name</label>
+                <label class="form-label"><i class="fas text-dark fa-user me-2 text-info"></i>Last Name</label>
                 <input type="text" name="adminLname" value="<%= record?.adminLname || '' %>" class="form-control fancy-input" placeholder="Enter last name">
               </div>
 
               <!-- Email -->
               <div class="form-group mb-4">
-                <label class="form-label"><i class="fas fa-envelope me-2 text-info"></i>Email Address</label>
+                <label class="form-label"><i class="fas text-dark fa-envelope me-2 text-info"></i>Email Address</label>
                 <input type="email" name="adminEmail" value="<%= record?.adminEmail || '' %>" class="form-control fancy-input" placeholder="Enter email address">
               </div>
 
               <!-- Function -->
               <div class="form-group mb-4">
-                <label class="form-label"><i class="fas fa-briefcase me-2 text-info"></i>Function</label>
+                <label class="form-label"><i class="fas text-dark fa-briefcase me-2 text-info"></i>Function</label>
                 <select name="adminFunction" class="form-select fancy-input">
                   <% const functions = ["Manager", "HR", "Web-Developer", "Application-Developer", "UI/UX Designer", "Project Coordinator", "QA Engineer", "DevOps Engineer", "Database Administrator"]; %>
                   <% functions.forEach(func => { %>
@@ -52,7 +52,7 @@
 
               <!-- Status -->
               <div class="form-group mb-4">
-                <label class="form-label"><i class="fas fa-signal me-2 text-info"></i>Status</label>
+                <label class="form-label"><i class="fas text-dark fa-signal me-2 text-info"></i>Status</label>
                 <select name="adminStatus" class="form-select fancy-input">
                   <% ["Online", "Offline"].forEach(status => { %>
                     <option value="<%= status %>" <%= record?.adminStatus === status ? 'selected' : '' %>><%= status %></option>
@@ -62,21 +62,21 @@
 
               <!-- Join Date -->
               <div class="form-group mb-4">
-                <label class="form-label"><i class="fas fa-calendar-alt me-2 text-info"></i>Join Date</label>
+                <label class="form-label"><i class="fas text-dark fa-calendar-alt me-2 text-info"></i>Join Date</label>
                 <input type="date" name="joinDate" class="form-control fancy-input" value="<%= record?.joinDate || '' %>">
               </div>
 
               <!-- Current Image -->
               <% if (record?.adminImage) { %>
                 <div class="mb-4">
-                  <label class="form-label text-dark"><i class="fas fa-image me-2 text-info"></i>Current Image</label><br>
+                  <label class="form-label text-dark"><i class="fas text-dark fa-image me-2 text-info"></i>Current Image</label><br>
                   <img src="../<%= record.adminImage %>" class="rounded shadow-sm border" height="100" alt="Admin Image">
                 </div>
               <% } %>
 
               <!-- Upload New Image -->
               <div class="form-group mb-4">
-                <label class="form-label"><i class="fas fa-upload me-2 text-info"></i>Upload New Image</label>
+                <label class="form-label"><i class="fas text-dark fa-upload me-2 text-info"></i>Upload New Image</label>
                 <input type="file" name="adminImage" class="form-control fancy-input">
               </div>
 
