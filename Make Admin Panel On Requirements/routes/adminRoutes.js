@@ -65,7 +65,13 @@ route.get('/editAdmin/:id', passport.checkAuthenticationForLogin, editAdminPage)
 route.post('/updateAdmin/:id', upload.single('adminImage'), updateAdmin);
 
 // Category Routing...
-route.use("/category", passport.checkAuthenticationForLogin, require("./categoryRoutes"))
+route.use("/category", passport.checkAuthenticationForLogin, require("./categoryRoutes"));
+
+// Category Routing...
+route.use("/category", passport.checkAuthenticationForLogin, require("./categoryRoutes"));
+
+// Sub Category Routing...
+route.use("/subCategory", passport.checkAuthenticationForLogin, require("./subCategoryRoutes"));
 
 
 module.exports = route;

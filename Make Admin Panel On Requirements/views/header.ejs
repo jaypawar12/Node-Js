@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="../../assets/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
   <title>
     Material Dashboard 3 by Creative Tim
   </title>
@@ -15,8 +15,8 @@
 
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900" />
   <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+  <link href="../../assets/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="../../assets/css/nucleo-svg.css" rel="stylesheet" />
   <!-- Font Awesome Icons -->
   <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
   <!-- Material Icons -->
@@ -27,7 +27,7 @@
   <!-- Toastify Css -->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
+  <link id="pagestyle" href="../../assets/css/material-dashboard.css?v=3.2.0" rel="stylesheet" />
 </head>
 
 <body class="g-sidenav-show  bg-gray-100">
@@ -37,13 +37,14 @@
       <i class="fas fa-times p-3 cursor-pointer text-dark opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
         aria-hidden="true" id="iconSidenav"></i>
       <a class="navbar-brand px-4 py-3 m-0" href="/dashboard">
-        <img src="../assets/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
+        <img src="../../assets/img/logo-ct-dark.png" class="navbar-brand-img" width="26" height="26" alt="main_logo">
         <span class="ms-1 text-sm text-dark">Creative Tim</span>
       </a>
     </div>
     <hr class="horizontal dark mt-0 mb-2">
-    <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
-      <ul class="navbar-nav">
+    <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+      <ul class="navbar-nav" id="accordionSidebar">
+
         <!-- Dashboard -->
         <li class="nav-item">
           <a class="nav-link active bg-gradient-dark text-white" href="/dashboard">
@@ -59,7 +60,7 @@
             <i class="material-symbols-rounded opacity-5">admin_panel_settings</i>
             <span class="nav-link-text ms-1">Admin</span>
           </a>
-          <div class="collapse ps-4" id="adminMenu">
+          <div class="collapse ps-4" id="adminMenu" data-bs-parent="#accordionSidebar">
             <ul class="nav flex-column ms-1">
               <li class="nav-item">
                 <a class="nav-link text-dark" href="/addAdminPage">
@@ -84,7 +85,7 @@
             <i class="material-symbols-rounded opacity-5">category</i>
             <span class="nav-link-text ms-1">Category</span>
           </a>
-          <div class="collapse ps-4" id="categoryMenu">
+          <div class="collapse ps-4" id="categoryMenu" data-bs-parent="#accordionSidebar">
             <ul class="nav flex-column ms-1">
               <li class="nav-item">
                 <a class="nav-link text-dark" href="/category/addCategoryPage">
@@ -96,6 +97,56 @@
                 <a class="nav-link text-dark" href="/category/viewCategory">
                   <i class="material-symbols-rounded opacity-5">visibility</i>
                   <span class="nav-link-text ms-1">View Categories</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <!-- Sub Category Dropdown -->
+        <li class="nav-item">
+          <a class="nav-link text-dark" data-bs-toggle="collapse" href="#subCategoryMenu" role="button"
+            aria-expanded="false" aria-controls="subCategoryMenu">
+            <i class="material-symbols-rounded opacity-5">ballot</i>
+            <span class="nav-link-text ms-1">Sub Category</span>
+          </a>
+          <div class="collapse ps-4" id="subCategoryMenu" data-bs-parent="#accordionSidebar">
+            <ul class="nav flex-column ms-1">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="/subCategory/addSubCategoryPage">
+                  <i class="material-symbols-rounded opacity-5">add</i>
+                  <span class="nav-link-text ms-1">Add Sub Category</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="/subCategory/viewSubCategory">
+                  <i class="material-symbols-rounded opacity-5">visibility</i>
+                  <span class="nav-link-text ms-1">View Sub Categories</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <!-- Extra Category Dropdown -->
+        <li class="nav-item">
+          <a class="nav-link text-dark" data-bs-toggle="collapse" href="#extraCategoryMenu" role="button"
+            aria-expanded="false" aria-controls="extraCategoryMenu">
+            <i class="material-symbols-rounded opacity-5">extension</i>
+            <span class="nav-link-text ms-1">Extra Category</span>
+          </a>
+          <div class="collapse ps-4" id="extraCategoryMenu" data-bs-parent="#accordionSidebar">
+            <ul class="nav flex-column ms-1">
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="/extraCategory/addExtraCategoryPage">
+                  <i class="material-symbols-rounded opacity-5">add</i>
+                  <span class="nav-link-text ms-1">Add Extra Category</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="/extraCategory/viewExtraCategory">
+                  <i class="material-symbols-rounded opacity-5">visibility</i>
+                  <span class="nav-link-text ms-1">View Extra Categories</span>
                 </a>
               </li>
             </ul>
@@ -114,8 +165,10 @@
             <span class="nav-link-text ms-1">Profile</span>
           </a>
         </li>
+
       </ul>
     </div>
+
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->
@@ -164,7 +217,7 @@
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
                       <div class="my-auto">
-                        <img src="../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
+                        <img src="../../assets/img/team-2.jpg" class="avatar avatar-sm  me-3 ">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
                         <h6 class="text-sm font-weight-normal mb-1">
@@ -182,7 +235,7 @@
                   <a class="dropdown-item border-radius-md" href="javascript:;">
                     <div class="d-flex py-1">
                       <div class="my-auto">
-                        <img src="../assets/img/small-logos/logo-spotify.svg"
+                        <img src="../../assets/img/small-logos/logo-spotify.svg"
                           class="avatar avatar-sm bg-gradient-dark  me-3 ">
                       </div>
                       <div class="d-flex flex-column justify-content-center">
@@ -244,6 +297,9 @@
       </div>
     </nav>
     <div class="fixed-plugin">
+
+
+
       <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
         <i class="material-symbols-rounded py-2">settings</i>
       </a>

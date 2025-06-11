@@ -1,0 +1,136 @@
+<%- include('../header') %>
+
+  <div class="main-content position-relative max-height-vh-100 h-100">
+    <div class="container-fluid px-2 px-md-4">
+
+      <!-- Header Banner -->
+      <div class="page-header min-height-300 border-radius-xl mt-4"
+        style="background-image: url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1920&q=80'); background-size: cover;">
+        <span class="mask bg-gradient-dark opacity-6"></span>
+      </div>
+
+      <!-- Edit Category Card -->
+      <div class="card shadow-lg border-0 mx-4 mt-n6">
+        <div class="card-body px-4 py-5">
+          <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+
+              <h4 class="text-center text-dark mb-4 fw-bold">
+                <i class="fas text-dark fa-edit me-2"></i>Edit Category
+              </h4>
+
+              <form action="/category/updateCategory/<%= adminData._id%>" method="POST" enctype="multipart/form-data">
+
+                <!-- Category Name -->
+                <div class="form-group mb-4">
+                  <label class="form-label fw-semibold">
+                    <i class="fas text-dark fa-tag me-2 text-info"></i>Category Name
+                  </label>
+                  <input type="text" name="category_name" value="<%= adminData.category_name %>"
+                    class="form-control p-2 shadow-sm custom-bg border-0" placeholder="Enter category name" required>
+                </div>
+
+                <!-- Description -->
+                <div class="form-group mb-4">
+                  <label class="form-label fw-semibold">
+                    <i class="fas text-dark fa-info-circle me-2 text-info"></i>Description
+                  </label>
+                  <textarea name="category_description" rows="3" class="form-control p-2 shadow-sm custom-bg border-0"
+                    placeholder="Enter category description" required><%= adminData.category_description %></textarea>
+                </div>
+
+                <!-- Status -->
+                <div class="form-group mb-4">
+                  <label class="form-label fw-semibold">
+                    <i class="fas text-dark fa-toggle-on me-2 text-info"></i>Status
+                  </label>
+                  <select name="category_status" class="form-select p-2 shadow-sm custom-bg border-0" required>
+                    <option value="" hidden>-- Select Status --</option>
+                    <option value="Active" <%=adminData.category_status==='Active' ? 'selected' : '' %>>Active</option>
+                    <option value="Inactive" <%=adminData.category_status==='Inactive' ? 'selected' : '' %>>Inactive
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Current Image -->
+                <div class="form-group mb-4">
+                  <label class="form-label fw-semibold">
+                    <i class="fas text-dark fa-image me-2 text-info"></i>Current Image
+                  </label>
+                  <div>
+                    <img src="../../<%= adminData.category_image %>" alt="Current Category Image" height="100">
+                  </div>
+                </div>
+
+                <!-- New Image Upload -->
+                <div class="form-group mb-4">
+                  <label class="form-label fw-semibold">
+                    <i class="fas text-dark fa-upload me-2 text-info"></i>Change Image (optional)
+                  </label>
+                  <input type="file" name="category_image" class="form-control p-2 shadow-sm custom-bg border-0">
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-lg bg-gradient-dark text-white px-5 shadow">
+                    <i class="fas fa-save me-2"></i>Update Category
+                  </button>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer py-4 mt-5">
+        <div class="container-fluid">
+          <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6 mb-lg-0 mb-4 text-center text-muted text-sm text-lg-start">
+              ©
+              <script>document.write(new Date().getFullYear())</script>, made with <i
+                class="fa fa-heart text-primary"></i> by Creative Tim
+            </div>
+            <div class="col-lg-6">
+              <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                <li class="nav-item"><a href="#" class="nav-link text-muted">Creative Tim</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-muted">About Us</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-muted">Blog</a></li>
+                <li class="nav-item"><a href="#" class="nav-link pe-0 text-muted">License</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <%- include('../footer') %>
+
+    <!-- Custom Style -->
+    <style>
+      .custom-bg {
+        background-color: #e3f2fd !important;
+      }
+
+      .form-label {
+        font-weight: 600;
+      }
+
+      .form-control,
+      .form-select {
+        height: 45px;
+      }
+
+      .form-group i {
+        min-width: 20px;
+      }
+
+      textarea.form-control {
+        height: auto;
+        resize: vertical;
+      }
+    </style>

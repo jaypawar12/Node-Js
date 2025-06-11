@@ -4,7 +4,7 @@ const route = express.Router();
 
 const upload = require("../middleware/categoryMulter");
 
-const { addCategoryPage, categoryInsert, viewCategoryPage, editCategoryPage, deleteCategory } = require("../controllers/categoryCTR");
+const { addCategoryPage, categoryInsert, viewCategoryPage, editCategoryPage, updateCategory, deleteCategory } = require("../controllers/categoryCTR");
 
 // Add Category Page
 route.get('/addCategoryPage', addCategoryPage);
@@ -16,6 +16,8 @@ route.get('/viewCategory', viewCategoryPage);
 
 // Edit Category
 route.get('/editCategoryPage/:id', editCategoryPage);
+
+route.post('/updateCategory/:id', upload.single('category_image'), updateCategory);
 
 // Delete Category
 route.get('/deleteCategory/:id', deleteCategory);
