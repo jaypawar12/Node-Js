@@ -1,5 +1,5 @@
 const categoryDetails = require('../models/categoryModel');
-const adminDetails = require('../models/categoryModel');
+const subCategoryDetails = require('../models/subCategoryModel');
 const fs = require('fs');
 const path = require('path');
 
@@ -48,10 +48,27 @@ const viewCategoryPage = async (req, res) => {
 const deleteCategory = async (req, res) => {
     try {
         const deleteCategory = await categoryDetails.findById(req.params.id);
-
         console.log("Delete Category Id:", deleteCategory);
 
-        if (deleteCategory) {
+
+
+
+
+        let subCategoryData = await subCategoryDetails.find({});
+
+        subCategoryData = subCategoryData.filter((data) => data.category_id == req.params.id);
+
+        subCategoryData.forEach(data => {
+            fs.unlinkSync(data.subCategory_image);
+        });
+
+
+        const subCategoryDeleteData = await subCategoryDetails.deleteMany({
+            category_id: req.params.id,
+        });
+
+
+        if (deleteCategory && subCategoryDeleteData) {
             const imagePath = deleteCategory.category_image;
 
             if (fs.existsSync(imagePath)) {
@@ -74,9 +91,9 @@ const deleteCategory = async (req, res) => {
 
 const editCategoryPage = async (req, res) => {
     try {
-        const adminData = await adminDetails.findById(req.params.id);
+        const categoryData = await categoryDetails.findById(req.params.id);
         res.render('category/editCategoryPage', {
-            adminData, success: req.flash("success"),
+            categoryData, success: req.flash("success"),
             error: req.flash("error")
         });
     } catch (e) {
@@ -112,7 +129,7 @@ const updateCategory = async (req, res) => {
                 res.redirect('/category/viewCategory');
             } else {
                 req.flash("error", "Failed to update category. Please try again.");
-                res.redirect('back');
+                res.redirect('/category/viewCategory');
             }
         } else {
             const update = await categoryDetails.findByIdAndUpdate(req.params.id, req.body);
@@ -121,21 +138,21 @@ const updateCategory = async (req, res) => {
                 res.redirect('/category/viewCategory');
             } else {
                 req.flash("error", "Category updation failed...");
-                res.redirect('back');
+                res.redirect('/category/viewCategory');
             }
         }
     } catch (e) {
         console.error("Update Error:", error);
         req.flash("error", "⚠️ An error occurred while updating the category.");
-        res.redirect('back');
+        res.redirect('/category/viewCategory');
     }
 }
 
-module.exports = { 
-    addCategoryPage, 
-    categoryInsert, 
-    viewCategoryPage, 
-    editCategoryPage, 
-    updateCategory, 
-    deleteCategory 
+module.exports = {
+    addCategoryPage,
+    categoryInsert,
+    viewCategoryPage,
+    editCategoryPage,
+    updateCategory,
+    deleteCategory
 };

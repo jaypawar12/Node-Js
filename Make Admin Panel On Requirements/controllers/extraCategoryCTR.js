@@ -1,0 +1,3 @@
+const addExtraCategoryPage = (req, res) => {
+    
+}

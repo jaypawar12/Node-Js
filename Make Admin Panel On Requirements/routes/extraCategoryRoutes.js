@@ -4,22 +4,22 @@ const route = express.Router();
 
 const upload = require("../middleware/subCategoryMulter");
 
-const { addSubCategory, subCategoryInsert, viewSubCategoryPage, editSubCategoryPage, updateSubCategory, deleteSubCategory } = require("../controllers/subCategoryCTR");
+const {addExtraCategoryPage} = require('../controllers/extraCategoryCTR')
 
 // Add Category Page
-route.get('/addSubCategoryPage', addSubCategory);
+route.get('/addExtraCategoryPage', addExtraCategoryPage);
 route.post('/subCategoryInsert', upload.single('subCategory_image'), subCategoryInsert)
 
-// // View Category Page
+// View Category Page
 route.get('/viewSubCategoryPage', viewSubCategoryPage);
 
 
-// // Edit Category
+// Edit Category
 route.get('/editSubCategoryPage/:id', editSubCategoryPage);
 route.post('/updateSubCategory/:id', upload.single('subCategory_image'), updateSubCategory);
 
 
-// // Delete Category
+// Delete Category
 route.get('/deleteSubCategory/:id', deleteSubCategory);
 
 module.exports = route;
