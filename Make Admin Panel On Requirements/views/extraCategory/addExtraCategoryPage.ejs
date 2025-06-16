@@ -5,7 +5,7 @@
 
             <!-- Header Banner -->
             <div class="page-header min-height-300 border-radius-xl mt-4"
-                style="background-image: url('https://images.unsplash.com/photo-1600267165685-341bb0b65e04?auto=format&fit=crop&w=1920&q=80'); background-size: cover;">
+                style="background-image: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1350&q=80'); background-size: cover;">
                 <span class="mask bg-gradient-dark opacity-6"></span>
             </div>
 
@@ -47,7 +47,7 @@
                                     <label class="form-label fw-semibold">
                                         <i class="fas fa-list-alt me-2 text-dark"></i>Parent Category
                                     </label>
-                                    <select name="category_id" class="form-select p-2 shadow-sm custom-bg border-0"
+                                    <select name="category_id" class="form-select shadow-sm custom-bg border-0"
                                         required>
                                         <option value="" hidden>-- Select Category --</option>
                                         <% categoryData.forEach(cat=> { %>
@@ -63,7 +63,7 @@
                                     <label class="form-label fw-semibold">
                                         <i class="fas fa-sitemap me-2 text-dark"></i>Parent SubCategory
                                     </label>
-                                    <select name="subCategory_id" class="form-select p-2 shadow-sm custom-bg border-0"
+                                    <select name="subCategory_id" class="form-select shadow-sm custom-bg border-0"
                                         required>
                                         <option value="" hidden>-- Select SubCategory --</option>
                                         <% subCategoryData.forEach(sub=> { %>
@@ -79,11 +79,12 @@
                                     <label class="form-label fw-semibold">
                                         <i class="fas fa-toggle-on me-2 text-dark"></i>Status
                                     </label>
-                                    <select name="extraCategory_status"
-                                        class="form-select p-2 shadow-sm custom-bg border-0" required>
+                                    <select name="extraCategory_status" class="form-select shadow-sm custom-bg border-0"
+                                        required>
                                         <option value="" hidden>-- Select Status --</option>
-                                        <option value="Active">Active</option>
-                                        <option value="Inactive">Inactive</option>
+                                        <option value="" hidden>-- Select Status --</option>
+                                        <option value="Active" style="color: green;">Active</option>
+                                        <option value="Inactive" style="color: red;">Inactive</option>
                                     </select>
                                 </div>
 
@@ -147,7 +148,11 @@
 
             .form-control,
             .form-select {
-                height: 45px;
+                min-height: 45px;
+                padding: 0.5rem 1rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                white-space: normal !important;
             }
 
             .form-group i {
@@ -157,5 +162,10 @@
             textarea.form-control {
                 height: auto;
                 resize: vertical;
+            }
+
+            select.form-select option {
+                white-space: normal;
+                overflow-wrap: break-word;
             }
         </style>

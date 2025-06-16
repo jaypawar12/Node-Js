@@ -1,3 +1,4 @@
+const extraCategoryDetails = require('../models/extraCaetgoryModel');
 const subCategoryDetails = require('../models/subCategoryModel');
 const categoryDetails = require('../models/categoryModel');
 const fs = require('fs');
@@ -5,7 +6,7 @@ const path = require('path');
 
 const addExtraCategoryPage = async (req, res) => {
     const categoryData = await categoryDetails.find();
-    const subCategoryData = await categoryDetails.find();
+    const subCategoryData = await subCategoryDetails.find();
     res.render('extraCategory/addExtraCategoryPage', {
         success: req.flash("success"),
         error: req.flash("error"),
@@ -14,113 +15,117 @@ const addExtraCategoryPage = async (req, res) => {
     });
 };
 
-const subCategoryInsert = (req, res) => {
+const extraCategoryInsert = (req, res) => {
     console.log(req.body);
     console.log(req.file);
     try {
-        req.body.subCategory_image = req.file.path;
-        const newSubCategory = subCategoryDetails.create(req.body);
+        req.body.extraCategory_image = req.file.path;
+        const newExtraCategory = extraCategoryDetails.create(req.body);
 
-        if (newSubCategory) {
-            req.flash("success", "Sub Category added successfully.");
+        if (newExtraCategory) {
+            req.flash("success", "Extra Category added successfully.");
         } else {
-            req.flash("error", "Failed to add Sub Category!");
+            req.flash("error", "Failed to add Extra Category!");
         }
-        res.redirect('/subCategory/addSubCategoryPage');
+        res.redirect('/extraCategory/addExtraCategoryPage');
     } catch (e) {
         req.flash("error", `Exception: ${e}`);
-        res.redirect('/subCategory/addSubCategoryPage');
+        res.redirect('/extraCategory/addExtraCategoryPage');
     }
 
 };
 
-const viewSubCategoryPage = async (req, res) => {
+const viewExtraCategoryPage = async (req, res) => {
     try {
-        const subCategory = await subCategoryDetails.find().populate("category_id").exec();
-        console.log(subCategory);
+        const extraCategory = await extraCategoryDetails.find().populate("category_id").populate("subCategory_id").exec();
+        console.log(extraCategory);
         const categories = await categoryDetails.find();
+        const subcategories = await subCategoryDetails.find();
 
 
-        if (subCategory) {
-            res.render("subCategory/viewSubCategoryPage", {
-                subCategory,
+        if (extraCategory) {
+            res.render("extraCategory/viewExtraCategoryPage", {
+                extraCategory,
                 categories,
+                subcategories,
                 success: req.flash("success"),
                 error: req.flash("error"),
             });
         } else {
             req.flash("error", "SubCategory not found.");
-            res.redirect("/subCategory/viewSubCategoryPage");
+            res.redirect("/extraCategory/viewExtraCategoryPage");
         }
 
     } catch (error) {
-        console.error("Error fetching subcategories:", error);
-        req.flash("error", "Failed to load subcategories. Please try again later.");
-        res.redirect('/subCategory/viewSubCategoryPage');
+        console.error("Error fetching Extra Category:", error);
+        req.flash("error", "Failed to load Extra Category. Please try again later.");
+        res.redirect('/extraCategory/viewExtraCategoryPage');
     }
 };
 
-const editSubCategoryPage = async (req, res) => {
+const editExtraCategoryPage = async (req, res) => {
     try {
         const categoryData = await categoryDetails.find({});
-        const subCategoryData = await subCategoryDetails.findById(req.params.id);
+        const subCategoryData = await subCategoryDetails.find({});
+        const extraCategoryData = await extraCategoryDetails.findById(req.params.id);
 
-        if (categoryData && subCategoryData) {
-            res.render('subCategory/editSubCategoryPage', {
+        if (categoryData && subCategoryData && extraCategoryData) {
+            res.render('extraCategory/editExtraCategoryPage', {
                 categoryData,
                 subCategoryData,
+                extraCategoryData,
                 success: req.flash('success'),
                 error: req.flash('error')
             });
         } else {
-            req.flash('error', 'SubCategory not found.');
+            req.flash('error', 'Extracategory not found.');
             res.redirect('/dashboard');
         }
     } catch (e) {
         console.error("Edit Page Error:", err);
         req.flash('error', 'Something went wrong.');
-        res.redirect('/subCategory/viewSubCategoryPage');
+        res.redirect('/extraCategory/viewExtraCategoryPage');
     }
 };
 
-const updateSubCategory = async (req, res) => {
-    // console.log("Update Body:", req.body);
-    // console.log("SubCategory ID:", req.params.id);
-    // console.log("SubCategory Image:", req.file);
+// const updateSubCategory = async (req, res) => {
+//     // console.log("Update Body:", req.body);
+//     // console.log("SubCategory ID:", req.params.id);
+//     // console.log("SubCategory Image:", req.file);
 
-    try {
-        const updateCategoryData = await subCategoryDetails.findById(req.params.id);
+//     try {
+//         const updateCategoryData = await subCategoryDetails.findById(req.params.id);
 
-        if (req.file) {
-            fs.unlinkSync(updateCategoryData.subCategory_image);
+//         if (req.file) {
+//             fs.unlinkSync(updateCategoryData.subCategory_image);
 
-            req.body.subCategory_image = req.file.path;
-            const updated = await subCategoryDetails.findByIdAndUpdate(req.params.id, req.body);
+//             req.body.subCategory_image = req.file.path;
+//             const updated = await subCategoryDetails.findByIdAndUpdate(req.params.id, req.body);
 
-            if (updated) {
-                req.flash('success', 'SubCategory updated successfully.');
-            } else {
-                req.flash('error', 'SubCategory not found or not updated.');
-            }
+//             if (updated) {
+//                 req.flash('success', 'SubCategory updated successfully.');
+//             } else {
+//                 req.flash('error', 'SubCategory not found or not updated.');
+//             }
 
-            res.redirect('/subCategory/viewSubCategoryPage');
-        }
-    } catch (err) {
-        console.error("Update Error:", err);
-        req.flash('error', 'Error updating SubCategory.');
-        res.redirect('/subCategory/viewSubCategoryPage');
-    }
-};
+//             res.redirect('/subCategory/viewSubCategoryPage');
+//         }
+//     } catch (err) {
+//         console.error("Update Error:", err);
+//         req.flash('error', 'Error updating SubCategory.');
+//         res.redirect('/subCategory/viewSubCategoryPage');
+//     }
+// };
 
-const deleteSubCategory = async (req, res) => {
+// const deleteSubCategory = async (req, res) => {
 
-}
+// }
 
 module.exports = {
     addExtraCategoryPage,
-    // subCategoryInsert,
-    // viewSubCategoryPage,
-    // editSubCategoryPage,
+    extraCategoryInsert,
+    viewExtraCategoryPage,
+    editExtraCategoryPage,
     // updateSubCategory,
     // deleteSubCategory,
 };
