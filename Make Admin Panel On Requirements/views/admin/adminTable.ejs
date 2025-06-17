@@ -66,13 +66,13 @@
                         </td>
                         <td class="align-middle text-center">
                           <div class="d-flex justify-content-center gap-4">
-                            <a href="/editAdmin/<%= data._id %>" class="text-secondary font-weight-bold text-xs"
-                              data-toggle="tooltip" data-original-title="Edit user">
-                              Edit
+                            <a href="/editAdmin/<%= data._id %>" class="btn  btn-outline-dark" data-toggle="tooltip"
+                              data-original-title="Edit user">
+                              <i class="fas fa-edit me-1"></i>Edit
                             </a>
-                            <a href="/deleteAdmin/<%= data._id %>" class="text-secondary font-weight-bold text-xs"
-                              data-toggle="tooltip" data-original-title="Delete user">
-                              Delete
+                            <a href="/deleteAdmin/<%= data._id %>" class="btn  btn-outline-danger" data-toggle="tooltip"
+                              data-original-title="Delete user">
+                              <i class="fas fa-trash-alt me-1"></i>Delete
                             </a>
                           </div>
                         </td>
@@ -121,7 +121,8 @@
                             </p>
                           </td>
                           <td class="align-middle text-center text-sm">
-                            <span class="text-white px-2 py-1 rounded <% if(data.adminStatus === 'Online') { %> bg-gradient-success <% } else { %> bg-gradient-danger <% } %>">
+                            <span
+                              class="text-white px-2 py-1 rounded <% if(data.adminStatus === 'Online') { %> bg-gradient-success <% } else { %> bg-gradient-danger <% } %>">
                               <%= data.adminStatus %>
                             </span>
                           </td>
