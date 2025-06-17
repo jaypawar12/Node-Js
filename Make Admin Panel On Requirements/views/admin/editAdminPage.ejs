@@ -10,7 +10,7 @@
     </div>
 
     <!-- Edit Admin Card -->
-    <div class="card shadow-lg border-0 mx-4 mt-n6">
+    <div class="card shadow-lg border-0 mx-4 mt-n6 bg-light">
       <div class="card-body px-4 py-5">
         <div class="row justify-content-center">
           <div class="col-md-10 col-lg-8">
@@ -23,28 +23,28 @@
 
               <!-- First Name -->
               <div class="form-group mb-4">
-                <label class="form-label fw-semibold"><i class="fas fa-user me-2 text-info"></i>First Name</label>
+                <label class="form-label fw-semibold"><i class="fas fa-user me-2 text-dark"></i>First Name</label>
                 <input type="text" name="adminFname" class="form-control p-2 shadow-sm custom-bg border-0"
                   value="<%= record?.adminFname || '' %>" placeholder="Enter first name" required>
               </div>
 
               <!-- Last Name -->
               <div class="form-group mb-4">
-                <label class="form-label fw-semibold"><i class="fas fa-user me-2 text-info"></i>Last Name</label>
+                <label class="form-label fw-semibold"><i class="fas fa-user me-2 text-dark"></i>Last Name</label>
                 <input type="text" name="adminLname" class="form-control p-2 shadow-sm custom-bg border-0"
                   value="<%= record?.adminLname || '' %>" placeholder="Enter last name" required>
               </div>
 
               <!-- Email -->
               <div class="form-group mb-4">
-                <label class="form-label fw-semibold"><i class="fas fa-envelope me-2 text-info"></i>Email</label>
+                <label class="form-label fw-semibold"><i class="fas fa-envelope me-2 text-dark"></i>Email</label>
                 <input type="email" name="adminEmail" class="form-control p-2 shadow-sm custom-bg border-0"
                   value="<%= record?.adminEmail || '' %>" placeholder="Enter email" required>
               </div>
 
               <!-- Function -->
               <div class="form-group mb-4">
-                <label class="form-label fw-semibold"><i class="fas fa-briefcase me-2 text-info"></i>Function</label>
+                <label class="form-label fw-semibold"><i class="fas fa-briefcase me-2 text-dark"></i>Function</label>
                 <select name="adminFunction" class="form-select p-2 shadow-sm custom-bg border-0" required>
                   <option value="" hidden>-- Select Function --</option>
                   <% const functions = ["Manager", "HR", "Web-Developer", "Application-Developer", "UI/UX Designer", "Project Coordinator", "QA Engineer", "DevOps Engineer", "Database Administrator"]; %>
@@ -56,7 +56,7 @@
 
               <!-- Status -->
               <div class="form-group mb-4">
-                <label class="form-label fw-semibold"><i class="fas fa-signal me-2 text-info"></i>Status</label>
+                <label class="form-label fw-semibold"><i class="fas fa-signal me-2 text-dark"></i>Status</label>
                 <select name="adminStatus" class="form-select p-2 shadow-sm custom-bg border-0" required>
                   <option value="" hidden>-- Select Status --</option>
                   <option value="Online" <%= record?.adminStatus === 'Online' ? 'selected' : '' %>>Online</option>
@@ -66,7 +66,7 @@
 
               <!-- Join Date -->
               <div class="form-group mb-4">
-                <label class="form-label fw-semibold"><i class="fas fa-calendar-alt me-2 text-info"></i>Join Date</label>
+                <label class="form-label fw-semibold"><i class="fas fa-calendar-alt me-2 text-dark"></i>Join Date</label>
                 <input type="date" name="joinDate" class="form-control p-2 shadow-sm custom-bg border-0"
                   value="<%= record?.joinDate || '' %>" required>
               </div>
@@ -74,14 +74,14 @@
               <!-- Current Image Preview -->
               <% if (record?.adminImage) { %>
               <div class="form-group mb-4">
-                <label class="form-label fw-semibold"><i class="fas fa-image me-2 text-info"></i>Current Image</label><br>
+                <label class="form-label fw-semibold"><i class="fas fa-image me-2 text-dark"></i>Current Image</label><br>
                 <img src="../<%= record.adminImage %>" class="img-fluid rounded shadow" style="max-height: 120px;">
               </div>
               <% } %>
 
               <!-- Image Upload -->
               <div class="form-group mb-4">
-                <label class="form-label fw-semibold"><i class="fas fa-upload me-2 text-info"></i>Upload New Image</label>
+                <label class="form-label fw-semibold"><i class="fas fa-upload me-2 text-dark"></i>Upload New Image</label>
                 <input type="file" name="adminImage" class="form-control p-2 shadow-sm custom-bg border-0">
               </div>
 
