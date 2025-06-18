@@ -1,0 +1,93 @@
+<%- include('../header') %>
+
+    <div class="main-content position-relative max-height-vh-100 h-100">
+        <div class="container-fluid px-2 px-md-4">
+
+            <!-- Header Banner -->
+            <div class="page-header min-height-300 border-radius-xl mt-4"
+                style="background-image: url('https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=1920&q=80'); background-size: cover;">
+                <span class="mask bg-gradient-dark opacity-6"></span>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="row mt-n5">
+                <% if (productData.length> 0) { %>
+                    <% productData.forEach(product=> { %>
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card shadow-sm border-0 h-100">
+                                <img src="/<%= product.product_image %>" class="card-img-top"
+                                    style="height: 250px; object-fit: cover;" alt="<%= product.product_name %>">
+
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold">
+                                        <%= product.product_name %>
+                                    </h5>
+                                    <p class="text-muted mb-1"><strong>Price:</strong> ₹<%= product.product_price %>
+                                    </p>
+                                    <p class="mb-2">
+                                        <%= product.product_description.substring(0, 100) %>...
+                                    </p>
+
+                                    <div class="mb-2">
+                                        <span class="badge bg-primary">
+                                            <%= product.category_id?.category_name %>
+                                        </span>
+                                        <span class="badge bg-success">
+                                            <%= product.subCategory_id?.subCategory_name %>
+                                        </span>
+                                        <span class="badge bg-info text-dark">
+                                            <%= product.extraCategory_id?.extraCategory_name %>
+                                        </span>
+                                    </div>
+
+                                    <span
+                                        class="badge <%= product.product_status === 'Active' ? 'bg-success' : 'bg-danger' %>">
+                                        <%= product.product_status %>
+                                    </span>
+                                </div>
+
+                                <div class="card-footer d-flex justify-content-between">
+                                    <a href="/product/edit/<%= product._id %>" class="btn btn-sm btn-warning shadow-sm">
+                                        <i class="fas fa-edit me-1"></i>Edit
+                                    </a>
+                                    <form action="/product/delete/<%= product._id %>" method="POST"
+                                        onsubmit="return confirm('Are you sure?')">
+                                        <button class="btn btn-sm btn-danger shadow-sm">
+                                            <i class="fas fa-trash-alt me-1"></i>Delete
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <div class="col-12 text-center mt-5">
+                                    <h5 class="text-muted">No Product Data found.</h5>
+                                </div>
+                                <% } %>
+            </div>
+
+            <!-- Footer -->
+            <footer class="footer py-4 mt-5">
+                <div class="container-fluid">
+                    <div class="row align-items-center justify-content-lg-between">
+                        <div class="col-lg-6 mb-lg-0 mb-4 text-center text-muted text-sm text-lg-start">
+                            ©
+                            <script>document.write(new Date().getFullYear())</script>, made with ❤️ by Jay Pawar
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                                <li class="nav-item"><a href="#" class="nav-link text-muted">Creative Tim</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link text-muted">About Us</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link text-muted">Blog</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link pe-0 text-muted">License</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <%- include('../footer') %>
+

@@ -1,175 +1,195 @@
 <%- include('../header') %>
+
     <style>
-        .transform-on-hover {
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        .avatar-sm {
+            height: 50px;
+            width: 50px;
+            object-fit: cover;
+        }
+
+        tr[data-bs-toggle="modal"] {
             cursor: pointer;
         }
 
-        .transform-on-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2) !important;
-        }
-
-        .card-img-top.rounded-lg {
-            border-radius: 0.5rem !important;
-            border-bottom-left-radius: 0 !important;
-            border-bottom-right-radius: 0 !important;
-        }
-
-        .badge.rounded-pill {
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-        }
-
-        .modal-footer .btn {
-            transition: all 0.2s ease-in-out;
-        }
-
-        .modal-footer .btn-outline-dark:hover {
-            background-color: var(--bs-dark);
-            color: white;
-        }
-
-        .modal-footer .btn-outline-danger:hover {
-            background-color: var(--bs-danger);
-            color: white;
-        }
-
-        .alert-info {
-            background-color: #e0f7fa;
-            border-color: #b2ebf2;
-            color: #006064;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-        }
-
-        .category-card img {
-            width: 100%;
-            display: block;
+        .badge {
+            font-size: 0.8rem;
+            padding: 0.4em 0.6em;
         }
     </style>
 
-    <div class="container py-5">
-        <div class="d-flex justify-content-between align-items-center mb-5">
-            <h3 class="fw-bold text-dark mb-0">
-                <i class="fas fa-list-alt me-2"></i>All Categories
-            </h3>
-            <a href="/category/addCategoryPage" class="btn btn-dark shadow-sm">
-                <i class="fas fa-plus-circle me-2"></i>Add New Category
-            </a>
-        </div>
+    <div class="container-fluid py-4">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div
+                    class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center px-3">
+                    <h6 class="text-white text-capitalize mb-0">Category Table</h6>
+                    <a href="/category/addCategoryPage" class="btn btn-light btn-md">
+                        <i class="fas fa-plus-circle me-2"></i>Add New Category
+                    </a>
+                </div>
+            </div>
 
-        <div class="row">
-            <% if (categories.length> 0) { %>
-                <% categories.forEach((cat)=> { %>
-                    <div class="col-md-3  d-flex align-items-stretch">
-                        <div class="card shadow-lg h-100 border-0 transform-on-hover category-card"
-                            data-bs-toggle="modal" data-bs-target="#categoryDetailModal"
-                            data-category-id="<%= cat._id %>" data-category-name="<%= cat.category_name %>"
-                            data-category-description="<%= cat.category_description %>"
-                            data-category-status="<%= cat.category_status %>"
-                            data-category-image="../<%= cat.category_image %>">
-                            <img src="../<%= cat.category_image %>" class="card-img-top rounded-lg cursor-pointer"
-                                style="height: 200px; object-fit: cover;" alt="<%= cat.category_name %> Image">
-                            <div class="card-body d-flex align-items-center justify-content-center p-2">
-                                <h5 class="card-title fw-bold text-dark text-center mb-0">
-                                    <%= cat.category_name %>
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
-                    <% }); %>
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-3">
+                    <% if (categories.length> 0) { %>
+                        <table class="table align-items-start mb-0 table-hover text-sm">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th style="width: 80px;"
+                                        class="text-uppercase text-sm text-secondary text-center font-weight-bolder rounded-start">
+                                        Image</th>
+                                    <th
+                                        class="text-uppercase text-sm text-secondary text-center font-weight-bolder">
+                                        Name</th>
+                                    <th
+                                        class="text-uppercase text-sm text-secondary text-center font-weight-bolder">
+                                        Description
+                                    </th>
+                                    <th
+                                        class="text-uppercase text-sm text-secondary text-center font-weight-bolder">
+                                        Status</th>
+                                    <th
+                                        class="text-uppercase text-sm text-secondary text-center font-weight-bolder rounded-end">
+                                        Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% categories.forEach((cat)=> { %>
+                                    <tr data-bs-toggle="modal" data-bs-target="#categoryDetailModal"
+                                        data-category-id="<%= cat._id %>" data-category-name="<%= cat.category_name %>"
+                                        data-category-description="<%= cat.category_description %>"
+                                        data-category-status="<%= cat.category_status %>"
+                                        data-category-image="../<%= cat.category_image %>">
+
+                                        <td class="align-middle text-center">
+                                            <img src="../<%= cat.category_image %>" alt="<%= cat.category_name %>"
+                                                class="rounded border"
+                                                style="width: auto; height: 60px; object-fit: cover;">
+                                        </td>
+
+                                        <td class="align-middle text-center text-dark fw-semibold text-wrap"
+                                            style="max-width: 180px;">
+                                            <%= cat.category_name %>
+                                        </td>
+
+                                        <td class="align-middle text-muted text-wrap" style="max-width: 300px;">
+                                            <%= cat.category_description %>
+                                        </td>
+
+                                        <td class="text-center align-middle">
+                                            <span class="badge rounded py-2 px-3  
+                      <% if(cat.category_status === 'Active') { %> bg-gradient-success 
+                      <% } else { %> bg-gradient-danger <% } %>">
+                                                <%= cat.category_status %>
+                                            </span>
+                                        </td>
+
+                                        <td class="align-middle text-center">
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a href="/category/editCategoryPage/<%= cat._id %>"
+                                                    class="btn btn-outline-dark btn-md" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+
+                                                <a href="/category/deleteCategory/<%= cat._id %>"
+                                                    class="btn btn-outline-danger btn-md"
+                                                    onclick="return confirm('Are you sure you want to delete this category?');"
+                                                    title="Delete">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                            </tbody>
+                        </table>
                         <% } else { %>
-                            <div class="col-12 text-center py-5">
+                            <div class="text-center py-5">
                                 <div class="alert alert-info d-inline-flex align-items-center" role="alert">
                                     <i class="fas fa-info-circle me-2"></i>
                                     <h5 class="mb-0">No categories found.</h5>
                                 </div>
                             </div>
                             <% } %>
-        </div>
-
-        <div class="modal fade" id="categoryDetailModal" tabindex="-1" aria-labelledby="categoryDetailModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header bg-gradient-dark">
-                        <h5 class="modal-title text-white" id="categoryDetailModalLabel">Category Details</h5>
-                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body p-4">
-                        <div class="row">
-                            <div class="col-md-6 text-center">
-                                <img id="modalCategoryImage" src="" alt="Category Image"
-                                    class="img-fluid rounded shadow-sm mb-3"
-                                    style="max-height: 300px; object-fit: cover;">
-                            </div>
-                            <div class="col-md-6 d-flex flex-column justify-content-center">
-                                <h3 class="fw-bold text-dark" id="modalCategoryName"></h3>
-                                <p class="text-muted" id="modalCategoryDescription"></p>
-                                <p class="mb-3">Status: <span id="modalCategoryStatus"
-                                        class="badge px-3 py-2 text-uppercase fw-bold"></span></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-end bg-light p-3">
-                        <a href="#" id="modalEditButton" class="btn btn-outline-dark me-2 rounded-pill">
-                            <i class="fas fa-edit me-1"></i>Edit Category
-                        </a>
-                        <a href="#" id="modalDeleteButton" class="btn btn-outline-danger rounded-pill"
-                            onclick="return confirm('Are you sure you want to delete this category? This action cannot be undone.');">
-                            <i class="fas fa-trash-alt me-1"></i>Delete Category
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <%- include('../footer') %>
+    <!-- Category Detail Modal -->
+    <div class="modal fade" id="categoryDetailModal" tabindex="-1" aria-labelledby="categoryDetailModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-dark">
+                    <h5 class="modal-title text-white" id="categoryDetailModalLabel">Category Details</h5>
+                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="row">
+                        <div class="col-md-6 text-center">
+                            <img id="modalCategoryImage" src="" alt="Category Image"
+                                class="img-fluid rounded shadow-sm mb-3" style="max-height: 300px; object-fit: cover;">
+                        </div>
+                        <div class="col-md-6 d-flex flex-column justify-content-center">
+                            <h3 class="fw-bold text-dark" id="modalCategoryName"></h3>
+                            <p class="text-muted" id="modalCategoryDescription"></p>
+                            <p class="mb-3">Status: <span id="modalCategoryStatus"
+                                    class="badge px-3 py-2 text-uppercase text-sm fw-bold"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-end bg-light p-3">
+                    <a href="#" id="modalEditButton" class="btn btn-outline-dark me-2 rounded">
+                        <i class="fas fa-edit me-1"></i>Edit Category
+                    </a>
+                    <a href="#" id="modalDeleteButton" class="btn btn-outline-danger rounded"
+                        onclick="return confirm('Are you sure you want to delete this category? This action cannot be undone.');">
+                        <i class="fas fa-trash-alt me-1"></i>Delete Category
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const categoryDetailModal = document.getElementById('categoryDetailModal');
+            categoryDetailModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
 
+                const categoryId = button.getAttribute('data-category-id');
+                const categoryName = button.getAttribute('data-category-name');
+                const categoryDescription = button.getAttribute('data-category-description');
+                const categoryStatus = button.getAttribute('data-category-status');
+                const categoryImage = button.getAttribute('data-category-image');
 
-            <script>
-                document.addEventListener('DOMContentLoaded', function () {
-                    const categoryDetailModal = document.getElementById('categoryDetailModal');
-                    categoryDetailModal.addEventListener('show.bs.modal', function (event) {
-                        // Button that triggered the modal
-                        const button = event.relatedTarget;
+                const modalTitle = categoryDetailModal.querySelector('.modal-title');
+                const modalImage = categoryDetailModal.querySelector('#modalCategoryImage');
+                const modalName = categoryDetailModal.querySelector('#modalCategoryName');
+                const modalDescription = categoryDetailModal.querySelector('#modalCategoryDescription');
+                const modalStatus = categoryDetailModal.querySelector('#modalCategoryStatus');
+                const modalEditButton = categoryDetailModal.querySelector('#modalEditButton');
+                const modalDeleteButton = categoryDetailModal.querySelector('#modalDeleteButton');
 
-                        // Extract info from data-* attributes
-                        const categoryId = button.getAttribute('data-category-id');
-                        const categoryName = button.getAttribute('data-category-name');
-                        const categoryDescription = button.getAttribute('data-category-description');
-                        const categoryStatus = button.getAttribute('data-category-status');
-                        const categoryImage = button.getAttribute('data-category-image');
+                modalTitle.textContent = categoryName;
+                modalImage.src = categoryImage;
+                modalName.textContent = categoryName;
+                modalDescription.textContent = categoryDescription;
+                modalStatus.textContent = categoryStatus;
 
-                        // Update the modal's content.
-                        const modalTitle = categoryDetailModal.querySelector('.modal-title');
-                        const modalImage = categoryDetailModal.querySelector('#modalCategoryImage');
-                        const modalName = categoryDetailModal.querySelector('#modalCategoryName');
-                        const modalDescription = categoryDetailModal.querySelector('#modalCategoryDescription');
-                        const modalStatus = categoryDetailModal.querySelector('#modalCategoryStatus');
-                        const modalEditButton = categoryDetailModal.querySelector('#modalEditButton');
-                        const modalDeleteButton = categoryDetailModal.querySelector('#modalDeleteButton');
+                modalStatus.classList.remove('bg-success', 'bg-danger');
+                if (categoryStatus === 'Active') {
+                    modalStatus.classList.add('bg-success');
+                } else {
+                    modalStatus.classList.add('bg-danger');
+                }
 
-                        modalTitle.textContent = categoryName;
-                        modalImage.src = categoryImage;
-                        modalName.textContent = categoryName;
-                        modalDescription.textContent = categoryDescription;
-                        modalStatus.textContent = categoryStatus;
+                modalEditButton.href = `/category/editCategoryPage/${categoryId}`;
+                modalDeleteButton.href = `/category/deleteCategory/${categoryId}`;
+            });
+        });
+    </script>
 
-                        // Update status badge class
-                        modalStatus.classList.remove('bg-success', 'bg-danger');
-                        if (categoryStatus === 'Active') {
-                            modalStatus.classList.add('bg-success');
-                        } else {
-                            modalStatus.classList.add('bg-danger');
-                        }
-
-                        // Update button hrefs
-                        modalEditButton.href = `/category/editCategoryPage/${categoryId}`;
-                        modalDeleteButton.href = `/category/deleteCategory/${categoryId}`;
-                    });
-                });
-            </script>
+    <%- include('../footer') %>

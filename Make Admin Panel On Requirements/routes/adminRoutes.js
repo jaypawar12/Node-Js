@@ -73,5 +73,8 @@ route.use("/subCategory", passport.checkAuthenticationForLogin, require("./subCa
 // Sub Category Routing...
 route.use("/extraCategory", passport.checkAuthenticationForLogin, require("./extraCategoryRoutes"));
 
+// Product Routing...
+route.use("/product", passport.checkAuthenticationForLogin, require("./productRoutes"));
+
 
 module.exports = route;

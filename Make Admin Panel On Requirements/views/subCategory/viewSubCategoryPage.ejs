@@ -1,149 +1,149 @@
 <%- include('../header') %>
 
-    <style>
-        .card-category {
-            transition: 0.3s ease;
-            border-radius: 15px;
-        }
+    <div class="container-fluid py-4">
+        <div class="card my-4">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                <div
+                    class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3 d-flex justify-content-between align-items-center px-3">
+                    <h6 class="text-white text-capitalize mb-0">Sub Category Table</h6>
+                    <a href="/subCategory/addSubCategoryPage" class="btn btn-light btn-md">
+                        <i class="fas fa-plus-circle me-2"></i>Add Sub Category
+                    </a>
+                </div>
+            </div>
 
-        .card-category:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-        }
+            <div class="card-body px-0 pb-2">
+                <div class="table-responsive p-3">
+                    <% if (subCategory && subCategory.length> 0) { %>
+                        <table class="table align-items-center mb-0 table-hover text-sm">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="text-uppercase text-sm text-secondary text-center fw-bolder rounded-start">
+                                        Image
+                                    </th>
+                                    <th class="text-uppercase text-sm text-secondary text-center fw-bolder">
+                                        Name
+                                    </th>
+                                    <th class="text-uppercase text-sm text-secondary text-center fw-bolder">
+                                        Category
+                                    </th>
+                                    <th class="text-uppercase text-sm text-secondary text-start fw-bolder">
+                                        Description
+                                    </th>
+                                    <th class="text-uppercase text-sm text-secondary text-center fw-bolder">
+                                        Status
+                                    </th>
+                                    <th class="text-uppercase text-sm text-secondary text-center fw-bolder rounded-end">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
 
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
+                            <tbody>
+                                <% subCategory.forEach(sub=> { %>
+                                    <tr data-bs-toggle="modal" data-bs-target="#subCategoryModal<%= sub._id %>">
+                                        <td class="text-center">
+                                            <img src="../<%= sub.subCategory_image %>" class="rounded border"
+                                                style="width: auto; height: 60px; object-fit: cover;" alt="">
+                                        </td>
+                                        <td class="text-center">
+                                            <%= sub.subCategory_name %>
+                                        </td>
+                                        <td class="text-center">
+                                            <%= sub.category_id?.category_name %>
+                                        </td>
+                                        <td style="max-width: 250px;" class="text-wrap">
+                                            <%= sub.subCategory_description %>
+                                        </td>
+                                        <td class="text-center">
+                                            <span
+                                                class="badge rounded py-2 px-3 <%= sub.subCategory_status === 'Active' ? 'bg-gradient-success' : 'bg-gradient-danger' %>">
+                                                <%= sub.subCategory_status %>
+                                            </span>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a href="/subCategory/editSubCategoryPage/<%= sub._id %>"
+                                                    class="btn btn-outline-dark btn-md" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a href="/subCategory/deleteSubCategory/<%= sub._id %>"
+                                                    class="btn btn-outline-danger btn-md"
+                                                    onclick="return confirm('Are you sure you want to delete this subcategory?');"
+                                                    title="Delete">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
 
-        .subcategory-badge {
-            font-size: 0.85rem;
-        }
-
-        .modal-content {
-            border-radius: 20px;
-        }
-
-        .modal-header {
-            border-bottom: none;
-            background: linear-gradient(to right, #343a40, #212529);
-        }
-
-        .modal-footer {
-            border-top: none;
-        }
-
-        .info-icon {
-            margin-right: 6px;
-        }
-
-        .text-muted-sm {
-            font-size: 0.9rem;
-            color: #6c757d;
-        }
-    </style>
-
-    <div class="container py-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-bold text-dark mb-0">
-                <i class="fas fa-list-alt me-2"></i>All Sub Categories
-            </h3>
-            <a href="/subCategory/addSubCategoryPage" class="btn btn-dark shadow">
-                <i class="fas fa-plus-circle me-2"></i>Add Sub Category
-            </a>
-        </div>
-
-        <div class="row g-5">
-            <% if (subCategory && subCategory.length> 0) { %>
-                <% subCategory.forEach(subCate=> { %>
-                    <div class="col-sm-6 col-md-4 col-lg-3">
-                        <div class="card shadow-sm border-0 card-category h-100" data-bs-toggle="modal"
-                            data-bs-target="#subCategoryModal<%= subCate._id %>">
-                            <img src="../<%= subCate.subCategory_image %>" class="img-fluid rounded-top"
-                                style="height: 180px; object-fit: cover;" />
-                            <div class="card-body text-center">
-                                <h5 class="card-title text-primary mb-2">
-                                    <%= subCate.subCategory_name %>
-                                </h5>
-                                <div class="mb-2">
-                                    <span
-                                        class="badge subcategory-badge <%= subCate.subCategory_status === 'Active' ? 'bg-success' : 'bg-danger' %>">
-                                        <%= subCate.subCategory_status %>
-                                    </span>
-                                </div>
-                                <div class="text-muted-sm text-dark">
-                                    <i class="fas fa-tags info-icon"></i>
-                                    Category: <%= subCate.category_id?.category_name %>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="subCategoryModal<%= subCate._id %>" tabindex="-1"
-                        aria-labelledby="modalLabel<%= subCate._id %>" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                            <div class="modal-content rounded-4 shadow-lg">
-                                <div class="modal-header bg-primary text-white rounded-top">
-                                    <h5 class="modal-title text-white d-flex align-items-center"
-                                        id="modalLabel<%= subCate._id %>">
-                                        <i class="fas fa-info-circle me-2"></i>
-                                        <%= subCate.subCategory_name %>
-                                    </h5>
-                                    <button type="button" class="btn-close text-light" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="row g-4">
-                                        <!-- Image Section -->
-                                        <div class="col-md-5 text-center">
-                                            <img src="../<%= subCate.subCategory_image %>" alt="SubCategory Image"
-                                                class="img-fluid rounded shadow"
-                                                style="max-height: 250px; object-fit: cover;" />
-                                        </div>
-
-                                        <!-- Info Section -->
-                                        <div class="col-md-7">
-                                            <p><strong><i class="fas fa-tags me-2 text-dark"></i>Category:</strong>
-                                                <%= subCate.category_id?.category_name %>
-                                            </p>
-                                            <p><strong><i
-                                                        class="fas fa-align-left me-2 text-dark"></i>Description:</strong>
-                                                <%= subCate.subCategory_description %>
-                                            </p>
-                                            <p><strong><i class="fas fa-toggle-on me-2 text-dark"></i>Status:</strong>
-                                                <span
-                                                    class="badge <%= subCate.subCategory_status === 'Active' ? 'bg-success' : 'bg-danger' %>">
-                                                    <%= subCate.subCategory_status %>
-                                                </span>
-                                            </p>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="subCategoryModal<%= sub._id %>" tabindex="-1"
+                                        aria-labelledby="modalLabel<%= sub._id %>" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content rounded-4 shadow-lg">
+                                                <div class="modal-header bg-dark text-white">
+                                                    <h5 class="modal-title text-white d-flex align-items-center"
+                                                        id="modalLabel<%= sub._id %>">
+                                                        <i class="fas fa-info-circle me-2"></i>
+                                                        <%= sub.subCategory_name %>
+                                                    </h5>
+                                                    <button type="button" class="btn-close text-white"
+                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row g-4">
+                                                        <div class="col-md-5 text-center">
+                                                            <img src="../<%= sub.subCategory_image %>"
+                                                                alt="SubCategory Image" class="img-fluid rounded shadow"
+                                                                style="max-height: 250px; object-fit: cover;" />
+                                                        </div>
+                                                        <div class="col-md-7">
+                                                            <p><strong><i
+                                                                        class="fas fa-tags me-2 text-dark"></i>Category:</strong>
+                                                                <%= sub.category_id?.category_name %>
+                                                            </p>
+                                                            <p><strong><i
+                                                                        class="fas fa-align-left me-2 text-dark"></i>Description:</strong>
+                                                                <%= sub.subCategory_description %>
+                                                            </p>
+                                                            <p>
+                                                                <strong><i
+                                                                        class="fas fa-toggle-on me-2 text-dark"></i>Status:</strong>
+                                                                <span
+                                                                    class="badge <%= sub.subCategory_status === 'Active' ? 'bg-success' : 'bg-danger' %>">
+                                                                    <%= sub.subCategory_status %>
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a href="/subCategory/editSubCategoryPage/<%= sub._id %>"
+                                                        class="btn btn-outline-dark">
+                                                        <i class="fas fa-edit me-1"></i>Edit
+                                                    </a>
+                                                    <a href="/subCategory/deleteSubCategory/<%= sub._id %>"
+                                                        class="btn btn-outline-danger"
+                                                        onclick="return confirm('Are you sure you want to delete this subcategory?')">
+                                                        <i class="fas fa-trash-alt me-1"></i>Delete
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer ">
-                                    <a href="/subCategory/editSubCategoryPage/<%= subCate._id %>"
-                                        class="btn btn-outline-dark">
-                                        <i class="fas fa-edit me-1"></i>Edit
-                                    </a>
-                                    <a href="/subCategory/deleteSubCategory/<%= subCate._id %>"
-                                        class="btn btn-outline-danger"
-                                        onclick="return confirm('Are you sure you want to delete this subcategory?')">
-                                        <i class="fas fa-trash-alt me-1"></i>Delete
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <% }) %>
+                                    <% }) %>
+                            </tbody>
+                        </table>
                         <% } else { %>
-                            <div class="col-12 text-center">
+                            <div class="text-center py-5">
                                 <div class="alert alert-info shadow-sm">
                                     <i class="fas fa-info-circle me-2"></i>No subcategories found.
                                 </div>
                             </div>
                             <% } %>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -129,4 +129,4 @@ module.exports = {
     editExtraCategoryPage,
     updateExtraCategory,
     deleteExtraCategory,
-};
+};  
