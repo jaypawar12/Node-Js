@@ -4,7 +4,7 @@ const route = express.Router();
 
 const upload = require("../middleware/productMulter");
 
-const { addProductPage, insertProduct, viewProductPage } = require('../controllers/productCTR');
+const { addProductPage, insertProduct, viewProductPage, editProductPage } = require('../controllers/productCTR');
 
 // // Add Category Page
 route.get('/addProductPage', addProductPage);
@@ -14,7 +14,7 @@ route.post('/insertProduct', upload.single('product_image'), insertProduct);
 route.get('/viewProductPage', viewProductPage);
 
 // // // Edit Category
-// route.get('/editExtraCategoryPage/:id', editExtraCategoryPage);
+route.get('/editProductPage/:id', editProductPage);
 // route.post('/updateExtraCategory/:id', upload.single('extraCategory_image'), updateExtraCategory);
 
 

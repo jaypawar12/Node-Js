@@ -33,23 +33,18 @@
                 <div class="table-responsive p-3">
                     <% if (categories.length> 0) { %>
                         <table class="table align-items-start mb-0 table-hover text-sm">
-                            <thead class="bg-light">
+                            <thead class="bg-dark">
                                 <tr>
-                                    <th style="width: 80px;"
-                                        class="text-uppercase text-sm text-secondary text-center font-weight-bolder rounded-start">
+                                    <th style="width: 80px;" class="text-center text-white rounded-start">
                                         Image</th>
-                                    <th
-                                        class="text-uppercase text-sm text-secondary text-center font-weight-bolder">
+                                    <th class="text-center text-white">
                                         Name</th>
-                                    <th
-                                        class="text-uppercase text-sm text-secondary text-center font-weight-bolder">
+                                    <th class="text-center text-white">
                                         Description
                                     </th>
-                                    <th
-                                        class="text-uppercase text-sm text-secondary text-center font-weight-bolder">
+                                    <th class="text-center text-white">
                                         Status</th>
-                                    <th
-                                        class="text-uppercase text-sm text-secondary text-center font-weight-bolder rounded-end">
+                                    <th class="text-center text-white rounded-end">
                                         Actions</th>
                                 </tr>
                             </thead>
@@ -69,11 +64,13 @@
 
                                         <td class="align-middle text-center text-dark fw-semibold text-wrap"
                                             style="max-width: 180px;">
-                                            <%= cat.category_name %>
+                                            <strong>
+                                                <%= cat.category_name %>
+                                            </strong>
                                         </td>
 
                                         <td class="align-middle text-muted text-wrap" style="max-width: 300px;">
-                                            <%= cat.category_description %>
+                                           <strong> <%= cat.category_description %></strong>
                                         </td>
 
                                         <td class="text-center align-middle">

@@ -39,7 +39,9 @@ const insertProduct = (req, res) => {
 };
 
 const viewProductPage = async (req, res) => {
+
     try {
+        console.log("VIEW cONTROLLER CALL");
         const productData = await productDetails.find().populate("category_id").populate("subCategory_id").populate("extraCategory_id").exec();
         console.log(productData);
         const categories = await categoryDetails.find();
@@ -68,30 +70,32 @@ const viewProductPage = async (req, res) => {
     }
 };
 
-// const editExtraCategoryPage = async (req, res) => {
-//     try {
-//         const categoryData = await categoryDetails.find({});
-//         const subCategoryData = await subCategoryDetails.find({});
-//         const extraCategoryData = await extraCategoryDetails.findById(req.params.id);
+const editProductPage = async (req, res) => {
+    try {
+        const categoryData = await categoryDetails.find({});
+        const subCategoryData = await subCategoryDetails.find({});
+        const extraCategoryData = await extraCategoryDetails.find({});
+        const productData = await productDetails.findById(req.params.id);
 
-//         if (categoryData && subCategoryData && extraCategoryData) {
-//             res.render('extraCategory/editExtraCategoryPage', {
-//                 categoryData,
-//                 subCategoryData,
-//                 extraCategoryData,
-//                 success: req.flash('success'),
-//                 error: req.flash('error')
-//             });
-//         } else {
-//             req.flash('error', 'Extracategory not found.');
-//             res.redirect('/dashboard');
-//         }
-//     } catch (e) {
-//         console.error("Edit Page Error:", err);
-//         req.flash('error', 'Something went wrong.');
-//         res.redirect('/extraCategory/viewExtraCategoryPage');
-//     }
-// };
+        if (categoryData && subCategoryData && extraCategoryData && productDetails) {
+            res.render('product/editProductPage', {
+                categoryData,
+                subCategoryData,
+                extraCategoryData,
+                productDetails,
+                success: req.flash('success'),
+                error: req.flash('error')
+            });
+        } else {
+            req.flash('error', 'Product not found.');
+            res.redirect('/dashboard');
+        }
+    } catch (e) {
+        console.error("Edit Page Error:", err);
+        req.flash('error', 'Something went wrong.');
+        res.redirect('/product/viewProductPage');
+    }
+};
 
 // const updateExtraCategory = async (req, res) => {
 //     // console.log("Update Body:", req.body);
@@ -131,7 +135,7 @@ module.exports = {
     addProductPage,
     insertProduct,
     viewProductPage,
-    // editExtraCategoryPage,
+    editProductPage,
     // updateExtraCategory,
     // deleteExtraCategory,
 };  

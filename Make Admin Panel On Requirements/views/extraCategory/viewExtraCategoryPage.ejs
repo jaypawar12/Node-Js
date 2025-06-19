@@ -15,18 +15,18 @@
                 <div class="table-responsive p-3">
                     <% if (extraCategory && extraCategory.length> 0) { %>
                         <table class="table align-items-center mb-0 table-hover text-sm">
-                            <thead class="bg-light">
+                            <thead class="bg-dark">
                                 <tr>
-                                    <th class="text-uppercase text-secondary text-sm text-center font-weight-bolder rounded-start">Image</th>
-                                    <th class="text-uppercase text-secondary text-sm text-center font-weight-bolder">Name</th>
-                                    <th class="text-uppercase text-secondary text-sm text-center font-weight-bolder">Category</th>
-                                    <th class="text-uppercase text-secondary text-sm text-center font-weight-bolder">SubCategory
+                                    <th class="text-center text-white rounded-start">Image</th>
+                                    <th class="text-center text-white">Name</th>
+                                    <th class="text-center text-white">Category</th>
+                                    <th class="text-center text-white">SubCategory
                                     </th>
-                                    <th class="text-uppercase text-secondary text-sm text-center font-weight-bolder">Description
+                                    <th class="text-center text-white">Description
                                     </th>
-                                    <th class="text-uppercase text-secondary text-sm text-center font-weight-bolder">
+                                    <th class="text-center text-white">
                                         Status</th>
-                                    <th class="text-uppercase text-secondary text-sm text-center font-weight-bolder rounded-end">
+                                    <th class="text-center text-white rounded-end">
                                         Actions</th>
                                 </tr>
                             </thead>
@@ -37,17 +37,25 @@
                                             <img src="../<%= extra.extraCategory_image %>" class="rounded border"
                                                 style="width: auto; height: 60px; object-fit: cover;" alt="">
                                         </td>
-                                        <td class="text-center">
-                                            <%= extra.extraCategory_name %>
+                                        <td class="text-center text-dark">
+                                            <strong>
+                                                <%= extra.extraCategory_name %>
+                                            </strong>
                                         </td>
-                                        <td class="text-center">
-                                            <%= extra.category_id?.category_name %>
+                                        <td class="text-center text-dark">
+                                            <strong>
+                                                <%= extra.category_id?.category_name %>
+                                            </strong>
                                         </td>
-                                        <td class="text-center">
-                                            <%= extra.subCategory_id?.subCategory_name %>
+                                        <td class="text-center text-dark">
+                                            <strong>
+                                                <%= extra.subCategory_id?.subCategory_name %>
+                                            </strong>
                                         </td>
-                                        <td style="max-width: 250px;" class="text-wrap">
-                                            <%= extra.extraCategory_description %>
+                                        <td style="max-width: 300px;" class="text-wrap">
+                                            <strong>
+                                                <%= extra.extraCategory_description %>
+                                            </strong>
                                         </td>
                                         <td class="text-center">
                                             <span

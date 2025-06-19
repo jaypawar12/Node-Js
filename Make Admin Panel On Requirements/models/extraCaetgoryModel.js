@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const extraCategorySchema = mongoose.Schema({
     category_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Category Details',     
+        ref: 'categoryDetails',     
         required: true,
     },
     subCategory_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'SubCategory Details',   
+        ref: 'subCategoryDetails',   
         required: true,
     },
     extraCategory_name: {
@@ -30,6 +30,6 @@ const extraCategorySchema = mongoose.Schema({
     }
 });
 
-const extraCategoryDetails = mongoose.model('ExtraCategory Details', extraCategorySchema);
+const extraCategoryDetails = mongoose.model('extraCategoryDetails', extraCategorySchema, "extraCategoryDetails");
 
 module.exports = extraCategoryDetails;
