@@ -1,5 +1,7 @@
 const subCategoryDetails = require('../models/subCategoryModel');
 const categoryDetails = require('../models/categoryModel');
+const extraCategoryDetails = require('../models/extraCaetgoryModel');
+const productDetails = require('../models/productModel');
 const fs = require('fs');
 const path = require('path');
 
@@ -116,7 +118,44 @@ const updateSubCategory = async (req, res) => {
 };
 
 const deleteSubCategory = async (req, res) => {
+    const deleteId = req.params.id;
 
+    console.log("Delete SubCategory Id", deleteId);
+
+    try {
+        const deletExtraCategory = await extraCategoryDetails.deleteMany({
+            subCategory_id: deleteId,
+        });
+
+        const deleteProduct = await productDetails.deleteMany({
+            subcategory_id: req.params.id,
+        });
+
+        if (deletExtraCategory && deleteProduct) {
+            const deleteSubCategory = await subCategoryDetails.findByIdAndDelete(deleteId);
+            console.log(deleteSubCategory);
+
+            if (deleteSubCategory) {
+                req.flash(
+                    "success",
+                    `<i class="fas fa-check-circle me-2"></i>${deleteSubCategory.subcategory_name} deleted successfully...`
+                );
+            } else {
+                req.flash("error", "SubCategory Not Found or Already Deleted.");
+            }
+        } else {
+            req.flash("error", "SubCategory Not Found or Already Deleted..");
+        }
+
+        res.redirect("/subCategory/viewSubCategoryPage");
+    } catch (e) {
+        console.log(e);
+        req.flash(
+            "error",
+            "Something went wrong while trying to delete the sub‑category."
+        );
+        res.redirect("/subCategory/viewSubCategoryPage");
+    }
 }
 
 module.exports = {

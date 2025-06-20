@@ -54,7 +54,7 @@
 
                                             <!-- Price -->
                                             <td class="text-dark">₹ <strong>
-                                                    <%= p.product_price.toFixed(2) %>
+                                                    <%= p.product_final_price.toFixed(2) %>
                                                 </strong>
                                             </td>
 
@@ -103,13 +103,13 @@
                                             <td>
                                                 <div class="d-flex justify-content-center gap-2">
                                                     <a href="/product/editProductPage/<%= p._id %>"
-                                                        class="btn btn-outline-dark btn-md" title="Edit">
+                                                        class="btn btn-outline-dark btn-md" style="margin-bottom: 0;" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <form action="/product/deleteProduct/<%= p._id %>" method="POST"
                                                         class="d-inline"
                                                         onsubmit="return confirm('Delete this product?')">
-                                                        <button class="btn btn-outline-danger btn-md" title="Delete">
+                                                        <button class="btn btn-outline-danger btn-md" style="margin-bottom: 0;" title="Delete">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>

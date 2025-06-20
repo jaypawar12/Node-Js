@@ -77,12 +77,12 @@ const editProductPage = async (req, res) => {
         const extraCategoryData = await extraCategoryDetails.find({});
         const productData = await productDetails.findById(req.params.id);
 
-        if (categoryData && subCategoryData && extraCategoryData && productDetails) {
+        if (categoryData && subCategoryData && extraCategoryData && productData) {
             res.render('product/editProductPage', {
                 categoryData,
                 subCategoryData,
                 extraCategoryData,
-                productDetails,
+                productData,
                 success: req.flash('success'),
                 error: req.flash('error')
             });
@@ -97,45 +97,59 @@ const editProductPage = async (req, res) => {
     }
 };
 
-// const updateExtraCategory = async (req, res) => {
-//     // console.log("Update Body:", req.body);
-//     // console.log("Extra Category ID:", req.params.id);
-//     // console.log("Extra Category Image:", req.file);
+const updateProduct = async (req, res) => {
+    // console.log("Update Body:", req.body);
+    // console.log("Extra Category ID:", req.params.id);
+    // console.log("Extra Category Image:", req.file);
 
-//     try {
-//         const updateExtraCategoryData = await extraCategoryDetails.findById(req.params.id);
+    try {
+        const updateProductData = await productDetails.findById(req.params.id);
 
-//         if (req.file) {
-//             fs.unlinkSync(updateExtraCategoryData.extraCategory_image);
+        if (req.file) {
+            fs.unlinkSync(updateProductData.product_image);
 
-//             req.body.extraCategory_image = req.file.path;
-//         }
+            req.body.product_image = req.file.path;
+        }
 
-//         const updated = await extraCategoryDetails.findByIdAndUpdate(req.params.id, req.body);
+        const updated = await productDetails.findByIdAndUpdate(req.params.id, req.body);
 
-//         if (updated) {
-//             req.flash('success', 'Extra Category updated successfully.');
-//         } else {
-//             req.flash('error', 'Extra Category not found or not updated.');
-//         }
+        if (updated) {
+            req.flash('success', 'Product updated successfully.');
+        } else {
+            req.flash('error', 'Product not found or not updated.');
+        }
 
-//         res.redirect('/extraCategory/viewExtraCategoryPage');
-//     } catch (err) {
-//         console.error("Update Error:", err);
-//         req.flash('error', 'Error updating Extra Category.');
-//         res.redirect('/extraCategory/viewExtraCategoryPage');
-//     }
-// };
+        res.redirect('/product/viewProductPage');
+    } catch (err) {
+        console.error("Update Error:", err);
+        req.flash('error', 'Error updating Product.');
+        res.redirect('/product/viewProductPage');
+    }
+};
 
-// const deleteExtraCategory = async (req, res) => {
+const deleteProduct = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const deleteProduct = await productDetails.findByIdAndDelete(id);
 
-// }
+        fs.unlinkSync(deleteProduct.product_image);
+        if (deleteProduct) {
+            req.flash("success", `${deleteProduct.product_name} deleted successfully.`);
+        } else {
+            req.flash("error", "Product not found.");
+        }
+    } catch (error) {
+        console.log(error);
+        req.flash("error", "Something went wrong while deleting.");
+    }
+    res.redirect("/product/viewProductPage");
+}
 
 module.exports = {
     addProductPage,
     insertProduct,
     viewProductPage,
     editProductPage,
-    // updateExtraCategory,
-    // deleteExtraCategory,
+    updateProduct,
+    deleteProduct,
 };  

@@ -1,0 +1,226 @@
+<%- include('../header') %>
+
+    <div class="main-content position-relative max-height-vh-100 h-100">
+        <div class="container-fluid px-2 px-md-4">
+
+            <!-- Header Banner -->
+            <div class="page-header min-height-300 border-radius-xl mt-4"
+                style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80'); background-size: cover;">
+                <span class="mask bg-gradient-dark opacity-6"></span>
+            </div>
+
+            <!-- Edit Product Card -->
+            <div class="card shadow-lg border-0 mx-4 mt-n6 bg-light">
+                <div class="card-body px-4 py-5">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 col-lg-8">
+
+                            <h4 class="text-center text-dark mb-4 fw-bold">
+                                <i class="fas fa-edit me-2 text-dark"></i>Edit Product
+                            </h4>
+
+                            <form action="/product/updateProduct/<%= productData._id %>" method="POST"
+                                enctype="multipart/form-data">
+
+                                <!-- Product Name -->
+                                <div class="form-group mb-4">
+                                    <label class="form-label fw-semibold"><i
+                                            class="fas fa-tag me-2 text-dark"></i>Product Name</label>
+                                    <input type="text" name="product_name"
+                                        class="form-control p-2 shadow-sm custom-bg border-0"
+                                        placeholder="Enter product name" value="<%= productData.product_name %>"
+                                        required>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="form-group mb-4">
+                                    <label class="form-label fw-semibold"><i
+                                            class="fas fa-info-circle me-2 text-dark"></i>Description</label>
+                                    <textarea name="product_description" rows="3"
+                                        class="form-control p-2 shadow-sm custom-bg border-0"
+                                        placeholder="Enter description"
+                                        required><%= productData.product_description %></textarea>
+                                </div>
+
+                                <!-- Price & Discount -->
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label fw-semibold"><i
+                                                class="fas fa-rupee-sign me-2 text-dark"></i>Price</label>
+                                        <input type="number" name="product_price"
+                                            class="form-control p-2 shadow-sm custom-bg border-0" min="0"
+                                            value="<%= productData.product_price %>" required>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <label class="form-label fw-semibold"><i
+                                                class="fas fa-percent me-2 text-dark"></i>Discount (%)</label>
+                                        <input type="number" name="product_discount"
+                                            class="form-control p-2 shadow-sm custom-bg border-0" min="0" max="100"
+                                            value="<%= productData.product_discount %>">
+                                    </div>
+                                </div>
+
+                                <!-- Final Price readonly -->
+                                <div class="form-group mb-4">
+                                    <label class="form-label fw-semibold"><i
+                                            class="fas fa-check-circle me-2 text-dark"></i>Final Price</label>
+                                    <input type="number" name="product_final_price"
+                                        class="form-control p-2 shadow-sm custom-bg border-0" readonly
+                                        value="<%= productData.product_final_price %>">
+                                </div>
+
+                                <!-- Category selects -->
+                                <div class="row">
+                                    <div class="col-md-4 mb-4">
+                                        <label class="form-label fw-semibold"><i
+                                                class="fas fa-layer-group me-2 text-dark"></i>Category</label>
+                                        <select name="category_id" class="form-select p-2 shadow-sm custom-bg border-0"
+                                            required>
+                                            <option hidden>-- Select Category --</option>
+                                            <% categoryData.forEach(c=> { %>
+                                                <option value="<%= c._id %>"
+                                                    <%=c._id.toString()===productData.category_id.toString()
+                                                    ? 'selected' : '' %>>
+                                                    <%= c.category_name %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label class="form-label fw-semibold"><i
+                                                class="fas fa-sitemap me-2 text-dark"></i>SubCategory</label>
+                                        <select name="subCategory_id"
+                                            class="form-select p-2 shadow-sm custom-bg border-0">
+                                            <option hidden>-- Select SubCategory --</option>
+                                            <% subCategoryData.forEach(sc=> { %>
+                                                <option value="<%= sc._id %>"
+                                                    <%=sc._id.toString()===productData.subCategory_id.toString()
+                                                    ? 'selected' : '' %>>
+                                                    <%= sc.subCategory_name %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-4">
+                                        <label class="form-label fw-semibold"><i
+                                                class="fas fa-plus-square me-2 text-dark"></i>ExtraCategory</label>
+                                        <select name="extraCategory_id"
+                                            class="form-select p-2 shadow-sm custom-bg border-0">
+                                            <option hidden>-- Select ExtraCategory --</option>
+                                            <% extraCategoryData.forEach(ec=> { %>
+                                                <option value="<%= ec._id %>"
+                                                    <%=ec._id.toString()===productData.extraCategory_id.toString()
+                                                    ? 'selected' : '' %>>
+                                                    <%= ec.extraCategory_name %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Status -->
+                                <div class="form-group mb-4">
+                                    <label class="form-label fw-semibold"><i
+                                            class="fas fa-toggle-on me-2 text-dark"></i>Status</label>
+                                    <select name="product_status" class="form-select p-2 shadow-sm custom-bg border-0">
+                                        <option value="Active" <%=productData.product_status==='Active' ? 'selected'
+                                            : '' %>>Active</option>
+                                        <option value="Inactive" <%=productData.product_status==='Inactive' ? 'selected'
+                                            : '' %>>Inactive</option>
+                                    </select>
+                                </div>
+
+                                <!-- Current Image -->
+                                <div class="form-group mb-4">
+                                    <label class="form-label fw-semibold d-block"><i
+                                            class="fas fa-image me-2 text-dark"></i>Current Image</label>
+                                    <img src="/<%= productData.product_image %>"
+                                        class="img-fluid rounded shadow-sm mb-2" style="max-height: 200px;">
+                                </div>
+
+                                <!-- Upload New Image -->
+                                <div class="form-group mb-4">
+                                    <label class="form-label fw-semibold"><i
+                                            class="fas fa-upload me-2 text-dark"></i>Upload New Image</label>
+                                    <input type="file" name="product_image"
+                                        class="form-control p-2 shadow-sm custom-bg border-0">
+                                </div>
+
+                                <!-- Submit -->
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-lg bg-gradient-dark text-white px-5 shadow">
+                                        <i class="fas fa-save me-2"></i>Update Product
+                                    </button>
+                                </div>
+
+                            </form>
+
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.card-body -->
+            </div><!-- /.card -->
+
+            <!-- Footer -->
+            <footer class="footer py-4 mt-5">
+                <div class="container-fluid">
+                    <div class="row align-items-center justify-content-lg-between">
+                        <div class="col-lg-6 mb-lg-0 mb-4 text-center text-muted text-sm text-lg-start">
+                            ©
+                            <script>document.write(new Date().getFullYear())</script>, made with ❤️ by Jay Pawar
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                                <li class="nav-item"><a href="#" class="nav-link text-muted">Creative Tim</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link text-muted">About Us</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link text-muted">Blog</a></li>
+                                <li class="nav-item"><a href="#" class="nav-link pe-0 text-muted">License</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+        </div><!-- /.container -->
+    </div><!-- /.main-content -->
+
+    <%- include('../footer') %>
+
+        <!-- Custom Style -->
+        <style>
+            .custom-bg {
+                background-color: #e3f2fd !important;
+            }
+
+            .form-label {
+                font-weight: 600;
+            }
+
+            .form-control,
+            .form-select {
+                height: 45px;
+            }
+
+            .form-group i {
+                min-width: 20px;
+            }
+
+            textarea.form-control {
+                height: auto;
+                resize: vertical;
+            }
+        </style>
+
+        <!-- Auto‑calc Final Price (optional) -->
+        <script>
+            const priceInput = document.querySelector('[name="product_price"]');
+            const discountInput = document.querySelector('[name="product_discount"]');
+            const finalInput = document.querySelector('[name="product_final_price"]');
+
+            function updateFinal() {
+                const price = parseFloat(priceInput.value) || 0;
+                const disc = parseFloat(discountInput.value) || 0;
+                finalInput.value = (price - price * disc / 100).toFixed(2);
+            }
+            priceInput.addEventListener('input', updateFinal);
+            discountInput.addEventListener('input', updateFinal);
+        </script>

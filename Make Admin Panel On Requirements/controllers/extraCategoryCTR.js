@@ -119,7 +119,44 @@ const updateExtraCategory = async (req, res) => {
 };
 
 const deleteExtraCategory = async (req, res) => {
+    const deleteId = req.params.id;
 
+    console.log("Delete ExtraCategory Id", deleteId);
+
+    try {
+        const deletExtraCategory = await extraCategoryDetails.deleteMany({
+            extraCategory_id: deleteId,
+        });
+
+        const deleteProduct = await productDetails.deleteMany({
+            extraCategory_id: req.params.id,
+        });
+
+        if (deletExtraCategory && deleteProduct) {
+            const deleteExtraCategory = await extraCategoryDetails.findByIdAndDelete(deleteId);
+            console.log(deleteExtraCategory);
+
+            if (deleteExtraCategory) {
+                req.flash(
+                    "success",
+                    `<i class="fas fa-check-circle me-2"></i>${deleteExtraCategory.extraCategory_name} deleted successfully...`
+                );
+            } else {
+                req.flash("error", "ExtraCategory Not Found or Already Deleted.");
+            }
+        } else {
+            req.flash("error", "ExtraCategory Not Found or Already Deleted..");
+        }
+
+        res.redirect("/extraCategory/viewExtraCategoryPage");
+    } catch (e) {
+        console.log(e);
+        req.flash(
+            "error",
+            "Something went wrong while trying to delete the sub‑category."
+        );
+        res.redirect("/extraCategory/viewExtraCategoryPage");
+    }
 }
 
 module.exports = {

@@ -1,5 +1,7 @@
 const categoryDetails = require('../models/categoryModel');
 const subCategoryDetails = require('../models/subCategoryModel');
+const extraCategoryDetails = require('../models/extraCaetgoryModel');
+const productDetails = require('../models/productModel');
 const fs = require('fs');
 const path = require('path');
 
@@ -47,36 +49,28 @@ const viewCategoryPage = async (req, res) => {
 
 const deleteCategory = async (req, res) => {
     try {
-        const deleteCategory = await categoryDetails.findById(req.params.id);
-        console.log("Delete Category Id:", deleteCategory);
-
-
-
-
-
-        let subCategoryData = await subCategoryDetails.find({});
-
-        subCategoryData = subCategoryData.filter((data) => data.category_id == req.params.id);
-
-        subCategoryData.forEach(data => {
-            fs.unlinkSync(data.subCategory_image);
-        });
-
-
         const subCategoryDeleteData = await subCategoryDetails.deleteMany({
             category_id: req.params.id,
         });
+        const extraCategoryDeleteData = await extraCategoryDetails.deleteMany({
+            category_id: req.params.id,
+        });
+        const productDeleteData = await productDetails.deleteMany({
+            category_id: req.params.id,
+        });
+
+        if (subCategoryDeleteData && extraCategoryDeleteData && productDeleteData) {
+            const deleteData = await categoryDetails.findByIdAndDelete({ _id: req.params.id });
+            console.log("Deleted Data", deleteData);
 
 
-        if (deleteCategory && subCategoryDeleteData) {
-            const imagePath = deleteCategory.category_image;
-
-            if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath);
+            if (deleteData) {
+                fs.unlinkSync(deleteData.category_image);
+                req.flash("success", "Category Deleted Successfully!");
+            } else {
+                req.flash("error", "Category Not Found or Already Deleted.");
             }
-            await categoryDetails.findByIdAndDelete(req.params.id);
 
-            req.flash("success", "Category Deleted Successfully!");
         } else {
             req.flash("error", "Category Not Found or Already Deleted.");
         }
