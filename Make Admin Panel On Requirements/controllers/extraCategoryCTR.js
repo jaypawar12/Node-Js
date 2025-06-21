@@ -139,7 +139,7 @@ const deleteExtraCategory = async (req, res) => {
             if (deleteExtraCategory) {
                 req.flash(
                     "success",
-                    `<i class="fas fa-check-circle me-2"></i>${deleteExtraCategory.extraCategory_name} deleted successfully...`
+                    `${deleteExtraCategory.extraCategory_name} deleted successfully...`
                 );
             } else {
                 req.flash("error", "ExtraCategory Not Found or Already Deleted.");

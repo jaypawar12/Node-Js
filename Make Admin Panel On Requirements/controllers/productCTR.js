@@ -128,21 +128,32 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-    const id = req.params.id;
     try {
-        const deleteProduct = await productDetails.findByIdAndDelete(id);
+        const productDeleteData = await productDetails.deleteMany({
+            category_id: req.params.id,
+        });
 
-        fs.unlinkSync(deleteProduct.product_image);
-        if (deleteProduct) {
-            req.flash("success", `${deleteProduct.product_name} deleted successfully.`);
+        if (productDeleteData) {
+            const deleteData = await productDetails.findByIdAndDelete({ _id: req.params.id });
+            console.log("Deleted Data", deleteData);
+
+
+            if (deleteData) {
+                fs.unlinkSync(deleteData.product_image);
+                req.flash("success", "Product Deleted Successfully!");
+            } else {
+                req.flash("error", "Product Not Found or Already Deleted.");
+            }
+
         } else {
-            req.flash("error", "Product not found.");
+            req.flash("error", "Product Not Found or Already Deleted.");
         }
-    } catch (error) {
-        console.log(error);
+        res.redirect("/product/viewProductPage");
+    } catch (e) {
+        console.error("Delete Error:", e);
         req.flash("error", "Something went wrong while deleting.");
+        res.redirect("/product/viewProductPage");
     }
-    res.redirect("/product/viewProductPage");
 }
 
 module.exports = {
